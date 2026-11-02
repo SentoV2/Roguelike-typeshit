@@ -8,11 +8,12 @@ public class EnemyMovment : MonoBehaviour {
 
     State enemyState = State.IDLE;
 
+    // Idle
     [Header("Idle")]
+    Vector3 startPostion;
     [SerializeField]
-    Transform idlePos1;
-    [SerializeField]    
-    Transform idlePos2;
+    int walkDistens = 1;
+    
 
     [Header("Movement")]
     [SerializeField]
@@ -26,24 +27,26 @@ public class EnemyMovment : MonoBehaviour {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         rigidbody = GetComponent<Rigidbody2D>();
+        startPostion = transform.position;
     }
 
     void FixedUpdate() {
-
         if (enemyState == State.IDLE) {
-            if (looksRight && transform.position.x < idlePos1.position.x) {
-                rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;
-                return;
+            if (looksRight) {
+                if (transform.position.x < startPostion.x + walkDistens) {
+                    rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;
+                }
+                else {
+                    flip();
+                }
             }
             else {
-                flip();
-            }
-
-            if (!looksRight && transform.position.x > idlePos2.position.x) {
-                rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
-            }
-            else {
-                flip();
+                if (transform.position.x > startPostion.x - walkDistens) {
+                    rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
+                }
+                else {
+                    flip();
+                }
             }
         }
         else {
@@ -54,6 +57,5 @@ public class EnemyMovment : MonoBehaviour {
     void flip() {
         looksRight = !looksRight;
         transform.eulerAngles += new Vector3(0, 180, 0);
-
     }
 }
