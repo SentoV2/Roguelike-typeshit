@@ -16,6 +16,9 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     int jumpforce = 10;
 
+
+    bool OnGrund = true;
+
     Rigidbody2D rigidbody2D;
 
 
