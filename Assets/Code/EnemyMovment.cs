@@ -32,21 +32,14 @@ public class EnemyMovment : MonoBehaviour {
 
     void FixedUpdate() {
         if (enemyState == State.IDLE) {
-            if (looksRight) {
-                if (transform.position.x < startPostion.x + walkDistens) {
-                    rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;
-                }
-                else {
-                    flip();
-                }
+            if (looksRight && transform.position.x < startPostion.x + walkDistens) {
+                rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;      
+            }
+            else if (!looksRight && transform.position.x > startPostion.x - walkDistens) {
+                rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
             }
             else {
-                if (transform.position.x > startPostion.x - walkDistens) {
-                    rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
-                }
-                else {
-                    flip();
-                }
+                flip();
             }
         }
         else {
