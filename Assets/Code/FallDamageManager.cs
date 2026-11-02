@@ -24,7 +24,7 @@ public class FallDamageManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!falling && body.velocity.y < 0f)
+        if (!falling && body.linearVelocity.y < 0f)
         {
             falling = true;
             startHeight = transform.position.y;
