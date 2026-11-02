@@ -3,13 +3,15 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     // Keys
+    [SerializeField]
     KeyCode left = KeyCode.D;
+    [SerializeField]
     KeyCode right = KeyCode.A;
-
+    [SerializeField]
     KeyCode jump = KeyCode.Space;
 
 
-
+    // movment veribales
     [SerializeField]
     int speed = 100;
 
@@ -37,13 +39,9 @@ public class PlayerMovement : MonoBehaviour {
         rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update() {
-        
-    }
 
     void FixedUpdate() {
-        
+        // gets the left/right movment
         if (Input.GetKey(left)) {
             rigidbody2D.linearVelocityX = speed * Time.fixedDeltaTime;
         }
@@ -53,8 +51,11 @@ public class PlayerMovement : MonoBehaviour {
         else {
             rigidbody2D.linearVelocityX = 0;
         }
+
+        // checks if the player is on grund
         OnGrund = Physics2D.OverlapCircle(grundCheck.position, grundCheckDistencs, grundLayer);
 
+        // jumps the player if the player is on grund
         if (Input.GetKey(jump) && OnGrund) {
             rigidbody2D.AddForceY(jumpforce);
         }
