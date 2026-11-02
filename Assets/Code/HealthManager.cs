@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class HealthManager : MonoBehaviour
@@ -14,6 +15,11 @@ public class HealthManager : MonoBehaviour
     public int CurrentHealth { get; private set; }
     public int MaxHealth { get; private set; }
     public bool IsAlive { get { return CurrentHealth > 0; } }
+    public bool IsInvulnerable { get; private set; }
+
+    // Andra komponenter kan lyssna på dessa händelser.
+    public event Action<HealthManager> HealthChanged;
+    public event Action<HealthManager> Died;
 
     private void Awake()
     {
@@ -22,17 +28,25 @@ public class HealthManager : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        if (IsAlive == false || damageAmount <= 0)
+        if (IsAlive == false || IsInvulnerable || damageAmount <= 0)
         {
             return;
         }
 
         CurrentHealth = Mathf.Max(0, CurrentHealth - damageAmount);
+        HealthChanged?.Invoke(this);
 
-        if (CurrentHealth == 0 && destroyWhenDead)
+        if (CurrentHealth == 0)
         {
-            Destroy(gameObject);
+            Died?.Invoke(this);
+            if (destroyWhenDead) Destroy(gameObject);
         }
+    }
+
+    public void ApplyDamage(int amount, bool instantKill = false)
+    {
+        if (instantKill) Kill();
+        else TakeDamage(amount);
     }
 
     public void Heal(int healAmount)
@@ -43,6 +57,21 @@ public class HealthManager : MonoBehaviour
         }
 
         CurrentHealth = Mathf.Min(MaxHealth, CurrentHealth + healAmount);
+        HealthChanged?.Invoke(this);
+    }
+
+    public void SetInvulnerable(bool value)
+    {
+        IsInvulnerable = value;
+    }
+
+    public void Kill()
+    {
+        if (IsAlive == false) return;
+        CurrentHealth = 0;
+        HealthChanged?.Invoke(this);
+        Died?.Invoke(this);
+        if (destroyWhenDead) Destroy(gameObject);
     }
 
     // Återställer hälsan till startvärdet.
@@ -50,5 +79,6 @@ public class HealthManager : MonoBehaviour
     {
         MaxHealth = Mathf.Max(1, startHealth);
         CurrentHealth = MaxHealth;
+        HealthChanged?.Invoke(this);
     }
 }

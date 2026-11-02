@@ -18,7 +18,7 @@ public class DamageManager : MonoBehaviour
 
         HealthManager targetHealth = target.GetComponent<HealthManager>();
 
-        // Kollidern kan sitta på ett barnobjekt.
+        // Kollidern kan sitta pÃ¥ ett barnobjekt.
         if (targetHealth == null)
         {
             targetHealth = target.GetComponentInParent<HealthManager>();
@@ -26,7 +26,7 @@ public class DamageManager : MonoBehaviour
 
         if (targetHealth != null)
         {
-            targetHealth.TakeDamage(damageAmount);
+            targetHealth.ApplyDamage(damageAmount, AdminCommands.WeaponInstantKill);
         }
     }
 
