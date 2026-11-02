@@ -2,11 +2,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
+    // Keys
     KeyCode left = KeyCode.D;
     KeyCode right = KeyCode.A;
 
+    KeyCode jump = KeyCode.Space;
+
+
+
     [SerializeField]
-    int speed = 1;
+    int speed = 100;
+
+    [SerializeField]
+    int jumpforce = 10;
 
     Rigidbody2D rigidbody2D;
 
@@ -28,6 +36,12 @@ public class PlayerMovement : MonoBehaviour {
         }
         else if (Input.GetKey(right)) {
             rigidbody2D.linearVelocityX = -speed * Time.fixedDeltaTime;
+        }
+        else {
+            rigidbody2D.linearVelocityX = 0;
+        }
+        if (Input.GetKey(jump)) {
+            rigidbody2D.AddForceY(jumpforce);
         }
 
     }
