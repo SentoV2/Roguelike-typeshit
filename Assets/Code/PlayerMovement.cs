@@ -14,7 +14,17 @@ public class PlayerMovement : MonoBehaviour {
     int speed = 100;
 
     [SerializeField]
-    int jumpforce = 10;
+    int jumpforce = 50;
+
+    // Grund Check
+    [SerializeField]
+    Transform grundCheck;
+
+    [SerializeField]
+    float grundCheckDistencs = 0.5f;
+
+    [SerializeField]
+    LayerMask grundLayer;
 
 
     bool OnGrund = true;
@@ -43,7 +53,9 @@ public class PlayerMovement : MonoBehaviour {
         else {
             rigidbody2D.linearVelocityX = 0;
         }
-        if (Input.GetKey(jump)) {
+        OnGrund = Physics2D.OverlapCircle(grundCheck.position, grundCheckDistencs, grundLayer);
+
+        if (Input.GetKey(jump) && OnGrund) {
             rigidbody2D.AddForceY(jumpforce);
         }
 
