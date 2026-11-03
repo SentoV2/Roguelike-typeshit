@@ -424,7 +424,8 @@ MonoBehaviour:
   walkDistens: 3
   speed: 80
   player: {fileID: 785845781}
-  AttackRange: 5
+  attackRange: 4
+  distencingPlayer: 1.2
 --- !u!212 &694769986
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -637,6 +638,7 @@ GameObject:
   - component: {fileID: 785845789}
   - component: {fileID: 785845790}
   - component: {fileID: 785845791}
+  - component: {fileID: 785845792}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -656,8 +658,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98999a9b649b0849b85c1191dd9a60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  left: 100
-  right: 97
+  right: 100
+  left: 97
   jump: 32
   speed: 100
   jumpforce: 150
@@ -737,7 +739,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 5125496859416670018, guid: 2b5eee3a3650559418546766fc62bd1c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -835,17 +837,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.116384655}
+  m_Offset: {x: 0, y: 0.13}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.68, y: 0.68}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.7672307}
+  m_Size: {x: 0.999, y: 0.75}
   m_EdgeRadius: 0
 --- !u!95 &785845789
 Animator:
@@ -896,6 +898,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c61a7e98933e6047a9a4bc82a8ea708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &785845792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785845781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85493e3eadd9d4d4f95995e6bbd51b33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundDashForce: 7
+  jumpDashForce: 12
+  jumpDashUpForce: 2
+  jumpDashDelay: 0.8
+  dashDuration: 0.18
+  dashCooldown: 0.35
 --- !u!1 &1804019207
 GameObject:
   m_ObjectHideFlags: 0
