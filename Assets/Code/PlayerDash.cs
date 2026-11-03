@@ -13,8 +13,12 @@ public class EnemyDash : MonoBehaviour {
     [SerializeField] private float jumpDashDelay = 0.8f;
     [SerializeField] private float dashDuration = 0.18f;
     [SerializeField] private float dashCooldown = 0.35f;
+    [SerializeField] private LayerMask groundLayers = ~0;
+    [SerializeField] private float groundCheckDistance = 0.08f;
 
     private Rigidbody2D body;
+    private Collider2D bodyCollider;
+    private readonly RaycastHit2D[] groundHits = new RaycastHit2D[4];
     private ParticleSystem dashParticles;
     private MonoBehaviour enemyMovement;
     private float lastGroundedTime, jumpStartedTime, lastDashTime = -10f;
@@ -26,10 +30,23 @@ public class EnemyDash : MonoBehaviour {
     private float activeDashSpeed;
     private int dashDirection;
     private Coroutine dashRoutine;
-    private bool IsGrounded => Time.time - lastGroundedTime < 0.12f;
+    private bool IsGrounded {
+        get {
+            if (Time.time - lastGroundedTime < 0.15f) return true;
+            if (bodyCollider == null) return false;
+            ContactFilter2D filter = new ContactFilter2D();
+            filter.SetLayerMask(groundLayers);
+            filter.useTriggers = false;
+            int count = bodyCollider.Cast(Vector2.down, filter, groundHits, groundCheckDistance);
+            for (int i = 0; i < count; i++)
+                if (groundHits[i].normal.y > 0.5f) return true;
+            return false;
+        }
+    }
 
     private void Awake() {
         body = GetComponent<Rigidbody2D>();
+        bodyCollider = GetComponent<Collider2D>();
         CreateDashParticles();
         foreach (MonoBehaviour script in GetComponents<MonoBehaviour>())
             if (script != this && script.GetType().Name == "EnemyMovment") { enemyMovement = script; break; }
@@ -101,7 +118,7 @@ public class EnemyDash : MonoBehaviour {
         lastDashTime = Time.time;
         if (jumpDash) airDashUsed = true;
         dashDirection = lastDirection;
-        activeDashSpeed = jumpDash ? jumpDashForce : groundDashForce;
+        activeDashSpeed = Mathf.Max(0.1f, jumpDash ? jumpDashForce : groundDashForce);
         isDashing = true;
         body.linearVelocity = new Vector2(dashDirection * activeDashSpeed,
             jumpDash ? jumpDashUpForce : body.linearVelocity.y);
