@@ -297,7 +297,7 @@ Transform:
   m_GameObject: {fileID: 193880657}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.02, y: -0.63, z: 0}
+  m_LocalPosition: {x: -0.07, y: -0.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14446,6 +14446,9 @@ GameObject:
   - component: {fileID: 1267259687}
   - component: {fileID: 1267259686}
   - component: {fileID: 1267259692}
+  - component: {fileID: 1267259693}
+  - component: {fileID: 1267259694}
+  - component: {fileID: 1267259695}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -14548,11 +14551,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98999a9b649b0849b85c1191dd9a60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  left: 100
-  right: 97
+  right: 100
+  left: 97
   jump: 32
   speed: 300
-  jumpforce: 150
+  jumpforce: 100
   grundCheck: {fileID: 193880658}
   grundCheckDistencs: 0.1
   grundLayer:
@@ -14678,6 +14681,51 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1267259693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267259684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85493e3eadd9d4d4f95995e6bbd51b33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundDashForce: 20
+  jumpDashForce: 12
+  jumpDashUpForce: 2
+  jumpDashDelay: 0.8
+  dashDuration: 0.18
+  dashCooldown: 0.35
+--- !u!114 &1267259694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267259684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c61a7e98933e6047a9a4bc82a8ea708, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1267259695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267259684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 418188fca5d7c384d9b5b077ba99b52c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Main
+  startHealth: 100
+  destroyWhenDead: 0
 --- !u!1 &1915310166
 GameObject:
   m_ObjectHideFlags: 0
