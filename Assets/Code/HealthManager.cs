@@ -92,7 +92,7 @@ public class HealthManager : MonoBehaviour {
         var emission = damageParticles.emission;
         emission.enabled = false;
         var shape = damageParticles.shape;
-            shape.enabled = false;
+        shape.enabled = false;
 
         ParticleSystem.ColorOverLifetimeModule fade = damageParticles.colorOverLifetime;
         fade.enabled = true;
