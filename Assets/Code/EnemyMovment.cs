@@ -26,7 +26,10 @@ public class EnemyMovment : MonoBehaviour {
     [SerializeField]
     GameObject player;
     [SerializeField]
-    float AttackRange = 1;
+    float attackRange = 1;
+
+    [SerializeField]
+    float distencingPlayer = 1.2f;
 
     Rigidbody2D rigidbody;
 
@@ -51,23 +54,27 @@ public class EnemyMovment : MonoBehaviour {
             else {
                 flip();
             }
-            if (Vector3.Distance(transform.position, player.transform.position) < AttackRange) {
+            if (Vector3.Distance(transform.position, player.transform.position) < attackRange) {
                 enemyState = State.ATTACKING;
             }
         }
         else if (enemyState == State.ATTACKING) {
-            if (!(transform.position.x - playerPos.x < 1)) {
+            
 
                 if (looksRight && transform.position.x < playerPos.x) {
-                    rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;
+                    if (Vector3.Distance(transform.position, playerPos) > distencingPlayer) {
+                        rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;
+                    }
                 }
                 else if (!looksRight && transform.position.x > playerPos.x) {
-                    rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
+                    if (Vector3.Distance(transform.position, playerPos) > distencingPlayer) {
+                        rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
+                    }
                 }
                 else {
                     flip();
                 }
-            }
+            
         }
     }
 
