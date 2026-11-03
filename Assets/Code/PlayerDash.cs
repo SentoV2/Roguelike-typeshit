@@ -10,6 +10,7 @@ public class EnemyDash : MonoBehaviour {
     [SerializeField] private float groundDashForce = 7f;
     [SerializeField] private float jumpDashForce = 12f;
     [SerializeField] private float jumpDashUpForce = 2f;
+    [SerializeField] private float upDashForce = 12f;
     [SerializeField] private float jumpDashDelay = 0.8f;
     [SerializeField] private float dashDuration = 0.18f;
     [SerializeField] private float dashCooldown = 0.35f;
@@ -26,7 +27,7 @@ public class EnemyDash : MonoBehaviour {
     private float lastDirectionInputTime = -1f;
     private int lastDirection = 1;
     private bool hasJumped, airDashUsed, movementWasEnabled;
-    private bool dashQueued, isDashing;
+    private bool dashQueued, queuedUpDash, isDashing, isUpDashing;
     private float activeDashSpeed;
     private int dashDirection;
     private Coroutine dashRoutine;
@@ -61,18 +62,28 @@ public class EnemyDash : MonoBehaviour {
             lastDirection = inputDirection > 0f ? 1 : -1;
             lastDirectionInputTime = Time.time;
         }
-        if (DashKeyPressed()) { dashQueued = true; dashQueuedTime = Time.unscaledTime; }
+        bool upDashPressed = UpDashKeyPressed();
+        if (DashKeyPressed() || upDashPressed) {
+            dashQueued = true;
+            queuedUpDash = upDashPressed;
+            dashQueuedTime = Time.unscaledTime;
+        }
         // Vänta kort så Shift + Enter hinner öppna admin-konsolen.
         if (!dashQueued || Time.unscaledTime - dashQueuedTime < 0.15f) return;
+        bool useUpDash = queuedUpDash;
         dashQueued = false;
+        queuedUpDash = false;
         if (Time.time - lastDashTime < dashCooldown) return;
-        if (IsGrounded) StartDash(false);
-        else if (hasJumped && !airDashUsed && Time.time - jumpStartedTime >= jumpDashDelay) StartDash(true);
+        if (useUpDash && (IsGrounded || !airDashUsed)) StartDash(false, true);
+        else if (!useUpDash && IsGrounded) StartDash(false);
+        else if (!useUpDash && hasJumped && !airDashUsed && Time.time - jumpStartedTime >= jumpDashDelay) StartDash(true);
     }
 
     private void FixedUpdate() {
         if (isDashing) {
-            body.linearVelocity = new Vector2(dashDirection * activeDashSpeed, body.linearVelocity.y);
+            body.linearVelocity = isUpDashing
+                ? new Vector2(0f, activeDashSpeed)
+                : new Vector2(dashDirection * activeDashSpeed, body.linearVelocity.y);
             return;
         }
         if (Time.time - lastDirectionInputTime > 0.25f && Mathf.Abs(body.linearVelocity.x) > 0.05f)
@@ -93,10 +104,21 @@ public class EnemyDash : MonoBehaviour {
         bool pressed = false;
 #if ENABLE_INPUT_SYSTEM
         if (Keyboard.current != null)
-            pressed = Keyboard.current.leftShiftKey.wasPressedThisFrame || Keyboard.current.rightShiftKey.wasPressedThisFrame;
+            pressed = Keyboard.current.leftShiftKey.wasPressedThisFrame;
 #endif
 #if ENABLE_LEGACY_INPUT_MANAGER
-        pressed |= Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift);
+        pressed |= Input.GetKeyDown(KeyCode.LeftShift);
+#endif
+        return pressed;
+    }
+
+    private bool UpDashKeyPressed() {
+        bool pressed = false;
+#if ENABLE_INPUT_SYSTEM
+        if (Keyboard.current != null) pressed = Keyboard.current.rightShiftKey.wasPressedThisFrame;
+#endif
+#if ENABLE_LEGACY_INPUT_MANAGER
+        pressed |= Input.GetKeyDown(KeyCode.RightShift);
 #endif
         return pressed;
     }
@@ -114,15 +136,16 @@ public class EnemyDash : MonoBehaviour {
         return direction;
     }
 
-    private void StartDash(bool jumpDash) {
+    private void StartDash(bool jumpDash, bool upDash = false) {
         lastDashTime = Time.time;
-        if (jumpDash) airDashUsed = true;
+        if (jumpDash || (upDash && !IsGrounded)) airDashUsed = true;
         dashDirection = lastDirection;
-        activeDashSpeed = Mathf.Max(0.1f, jumpDash ? jumpDashForce : groundDashForce);
+        isUpDashing = upDash;
+        activeDashSpeed = Mathf.Max(0.1f, upDash ? upDashForce : jumpDash ? jumpDashForce : groundDashForce);
         isDashing = true;
-        body.linearVelocity = new Vector2(dashDirection * activeDashSpeed,
+        body.linearVelocity = upDash ? new Vector2(0f, activeDashSpeed) : new Vector2(dashDirection * activeDashSpeed,
             jumpDash ? jumpDashUpForce : body.linearVelocity.y);
-        EmitDashParticles();
+        EmitDashParticles(upDash);
 
         // Pausa EnemyMovment under dashen så att kraften fungerar.
         movementWasEnabled = enemyMovement != null && enemyMovement.enabled;
@@ -166,11 +189,15 @@ public class EnemyDash : MonoBehaviour {
         if (sprite != null) particlesRenderer.sortingLayerID = sprite.sortingLayerID;
     }
 
-    private void EmitDashParticles() {
+    private void EmitDashParticles(bool upDash = false) {
         for (int i = 0; i < 12; i++) {
             ParticleSystem.EmitParams particle = new ParticleSystem.EmitParams();
-            particle.position = transform.position + new Vector3(-lastDirection * 0.35f, Random.Range(-0.2f, 0.2f), 0f);
-            particle.velocity = new Vector3(-lastDirection * Random.Range(2f, 4f), Random.Range(-1.5f, 1.5f), 0f);
+            particle.position = transform.position + (upDash
+                ? new Vector3(Random.Range(-0.2f, 0.2f), -0.35f, 0f)
+                : new Vector3(-lastDirection * 0.35f, Random.Range(-0.2f, 0.2f), 0f));
+            particle.velocity = upDash
+                ? new Vector3(Random.Range(-1.5f, 1.5f), -Random.Range(2f, 4f), 0f)
+                : new Vector3(-lastDirection * Random.Range(2f, 4f), Random.Range(-1.5f, 1.5f), 0f);
             particle.startColor = Random.value < 0.5f ? new Color(0.08f, 0.08f, 0.09f) : new Color(0.58f, 0.58f, 0.62f);
             particle.startSize = Random.Range(0.12f, 0.22f);
             particle.startLifetime = Random.Range(0.25f, 0.55f);
