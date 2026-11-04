@@ -50,9 +50,15 @@ public class PlayerMovement : MonoBehaviour {
         // gets the left/right movment
         if (Input.GetKey(right)) {
             move(speed);
+            if (looksRight) {
+                flip();
+            }
         }
         else if (Input.GetKey(left)) {
             move(-speed);
+            if (!looksRight) {
+                flip();
+            }
         }
         else {
             rigidbody2D.linearVelocityX = 0;
@@ -72,9 +78,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void move(int speed) {
         rigidbody2D.linearVelocityX = speed * Time.fixedDeltaTime;
-        if (looksRight) {
-            flip();
-        }
+        
         animator.SetFloat("walk", Mathf.Abs(rigidbody2D.linearVelocityX));
 
     }
