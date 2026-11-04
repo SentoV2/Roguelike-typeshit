@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class WalljumpMech : MonoBehaviour
 {
     [Header("Wall Jump")]
-    [SerializeField] private float wallJumpForceX = 18f;
+    [SerializeField] private float wallJumpForceX = 9f;
     [SerializeField] private float wallJumpForceY = 12f;
     [SerializeField] private LayerMask wallLayers = ~0;
     [SerializeField] private string playerTag = "Player";
@@ -17,6 +17,7 @@ public class WalljumpMech : MonoBehaviour
 
     private Rigidbody2D body;
     private Collider2D wallCollider;
+    private Collider2D ignoredWall;
     private Collider2D[] playerColliders;
     private SpriteRenderer playerSprite;
     private readonly List<Collider2D> phasedWalls = new List<Collider2D>();
@@ -59,6 +60,7 @@ public class WalljumpMech : MonoBehaviour
         body.constraints = originalConstraints;
         body.gravityScale = originalGravity;
         body.linearVelocity = new Vector2(jumpDirection * wallJumpForceX, Mathf.Max(12f, wallJumpForceY));
+        ignoredWall = launchWall;
         RestoreFacing();
         attachedToWall = false;
         wallCollider = null;
@@ -71,6 +73,7 @@ public class WalljumpMech : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        if (collision.collider == ignoredWall) ignoredWall = null;
         if (collision.collider != wallCollider) return;
         attachedToWall = false;
         wallCollider = null;
@@ -82,7 +85,8 @@ public class WalljumpMech : MonoBehaviour
 
     private void CheckWall(Collision2D collision)
     {
-        if (phasing || (wallLayers.value & (1 << collision.gameObject.layer)) == 0) return;
+        if (phasing || collision.collider == ignoredWall ||
+            (wallLayers.value & (1 << collision.gameObject.layer)) == 0) return;
         Collider2D wall = collision.collider;
 
         for (int i = 0; i < collision.contactCount; i++)
@@ -90,10 +94,10 @@ public class WalljumpMech : MonoBehaviour
             ContactPoint2D contact = collision.GetContact(i);
             if (Mathf.Abs(contact.normal.x) < 0.95f || Mathf.Abs(contact.normal.y) > 0.2f) continue;
 
-            float playerX = collision.otherCollider.bounds.center.x;
-            jumpDirection = playerX < contact.point.x ? -1 : 1;
-            if (Mathf.Abs(playerX - contact.point.x) < 0.01f)
-                jumpDirection = contact.normal.x > 0f ? 1 : -1;
+            float side = collision.otherCollider.bounds.center.x - wall.bounds.center.x;
+            jumpDirection = Mathf.Abs(side) > 0.01f
+                ? (side < 0f ? -1 : 1)
+                : (contact.normal.x > 0f ? 1 : -1);
 
             if (!attachedToWall) SaveFacing();
             attachedToWall = true;
@@ -125,7 +129,7 @@ public class WalljumpMech : MonoBehaviour
         foreach (Collider2D wall in Physics2D.OverlapBoxAll(center, size, 0f, wallLayers))
         {
             if (wall == null || wall.isTrigger || wall == launchWall || wall.attachedRigidbody == body ||
-                wall.transform.root == launchWall.transform.root || wall.bounds.size.y <= wall.bounds.size.x) continue;
+                wall.bounds.size.y <= wall.bounds.size.x) continue;
 
             SetWallCollision(wall, true);
             phasedWalls.Add(wall);
@@ -190,6 +194,7 @@ public class WalljumpMech : MonoBehaviour
         }
         RestorePhasedWalls();
         attachedToWall = false;
+        ignoredWall = null;
         phasing = false;
         RestoreFacing();
     }

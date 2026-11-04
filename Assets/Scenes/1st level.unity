@@ -572246,7 +572246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2302a20349f0484cb7a68cddd64c8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallJumpForceX: 12
+  wallJumpForceX: 6
   wallJumpForceY: 12
   wallLayers:
     serializedVersion: 2
