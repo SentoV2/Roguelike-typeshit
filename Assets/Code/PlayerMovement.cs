@@ -49,16 +49,10 @@ public class PlayerMovement : MonoBehaviour {
     void FixedUpdate() {
         // gets the left/right movment
         if (Input.GetKey(right)) {
-            rigidbody2D.linearVelocityX = speed * Time.fixedDeltaTime;
-            if (!looksRight) {
-                flip();
-            }
+            move(speed);
         }
         else if (Input.GetKey(left)) {
-            rigidbody2D.linearVelocityX = -speed * Time.fixedDeltaTime;
-            if (looksRight) {
-                flip();
-            }
+            move(-speed);
         }
         else {
             rigidbody2D.linearVelocityX = 0;
@@ -75,6 +69,16 @@ public class PlayerMovement : MonoBehaviour {
         }
 
     }
+
+    void move(int speed) {
+        rigidbody2D.linearVelocityX = speed * Time.fixedDeltaTime;
+        if (looksRight) {
+            flip();
+        }
+        animator.SetFloat("walk", Mathf.Abs(rigidbody2D.linearVelocityX));
+
+    }
+
     void flip() {
         looksRight = !looksRight;
         transform.eulerAngles += new Vector3(0, 180, 0);
