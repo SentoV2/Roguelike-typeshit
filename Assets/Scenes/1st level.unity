@@ -297,7 +297,7 @@ Transform:
   m_GameObject: {fileID: 193880657}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.39, y: -1.68, z: 0}
+  m_LocalPosition: {x: -0.32, y: -1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -571994,17 +571994,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.3586111, y: 0.31380463}
+  m_Offset: {x: -0.42007828, y: 0.31380463}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.72, y: 2.72}
+    oldSize: {x: 2.2666667, y: 2.2666667}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.7306347, y: 2.0909615}
+  m_Size: {x: 0.85356903, y: 2.0909615}
   m_EdgeRadius: 0
 --- !u!70 &1267259687
 CapsuleCollider2D:
@@ -572040,8 +572040,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.49640077, y: -1.0135092}
-  m_Size: {x: 0.7746813, y: 0.73320776}
+  m_Offset: {x: -0.49640077, y: -0.9192584}
+  m_Size: {x: 0.77468145, y: 0.5447064}
   m_Direction: 1
 --- !u!114 &1267259688
 MonoBehaviour:
@@ -572247,11 +572247,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallJumpForceX: 12
-  wallJumpForceY: 6
+  wallJumpForceY: 12
   wallLayers:
     serializedVersion: 2
     m_Bits: 4294967295
   playerTag: Player
+  phaseTime: 0.3
 --- !u!114 &1267259697
 MonoBehaviour:
   m_ObjectHideFlags: 0
