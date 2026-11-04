@@ -46,7 +46,7 @@ public class EnemyMovment : MonoBehaviour {
     void FixedUpdate() {
         if (enemyState == State.IDLE) {
             if (looksRight && transform.position.x < startPostion.x + walkDistens) {
-                rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;      
+                rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;
             }
             else if (!looksRight && transform.position.x > startPostion.x - walkDistens) {
                 rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
@@ -59,22 +59,22 @@ public class EnemyMovment : MonoBehaviour {
             }
         }
         else if (enemyState == State.ATTACKING) {
-            
 
-                if (looksRight && transform.position.x < playerPos.x) {
-                    if (Vector3.Distance(transform.position, playerPos) > distencingPlayer) {
-                        rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;
-                    }
+
+            if (looksRight && transform.position.x < playerPos.x) {
+                if (Vector3.Distance(transform.position, playerPos) > distencingPlayer) {
+                    rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;
                 }
-                else if (!looksRight && transform.position.x > playerPos.x) {
-                    if (Vector3.Distance(transform.position, playerPos) > distencingPlayer) {
-                        rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
-                    }
+            }
+            else if (!looksRight && transform.position.x > playerPos.x) {
+                if (Vector3.Distance(transform.position, playerPos) > distencingPlayer) {
+                    rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
                 }
-                else {
-                    flip();
-                }
-            
+            }
+            else {
+                flip();
+            }
+
         }
     }
 
