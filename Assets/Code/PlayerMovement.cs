@@ -50,13 +50,13 @@ public class PlayerMovement : MonoBehaviour {
         // gets the left/right movment
         if (Input.GetKey(right)) {
             move(speed);
-            if (looksRight) {
+            if (!looksRight) {
                 flip();
             }
         }
         else if (Input.GetKey(left)) {
             move(-speed);
-            if (!looksRight) {
+            if (looksRight) {
                 flip();
             }
         }
