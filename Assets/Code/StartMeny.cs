@@ -16,6 +16,6 @@ public class StartMeny : MonoBehaviour {
     }
 
     void loadGame() {
-        SceneManager.LoadScene(gameScenName);
+        SceneManager.LoadScene(gameScenName, LoadSceneMode.Single);
     }
 }
