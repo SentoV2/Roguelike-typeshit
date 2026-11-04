@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
         else {
-            rigidbody2D.linearVelocityX = 0;
+            move(0);
         }
 
         // checks if the player is on grund
