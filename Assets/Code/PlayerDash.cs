@@ -5,13 +5,12 @@ using UnityEngine.InputSystem;
 #endif
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class EnemyDash : MonoBehaviour {
+public class PlayerDash : MonoBehaviour {
     [Header("Dash")]
     [SerializeField] private float groundDashForce = 7f;
     [SerializeField] private float jumpDashForce = 12f;
     [SerializeField] private float jumpDashUpForce = 2f;
     [SerializeField] private float upDashForce = 12f;
-    [SerializeField] private float jumpDashDelay = 0.8f;
     [SerializeField] private float dashDuration = 0.18f;
     [SerializeField] private float dashCooldown = 0.35f;
     [SerializeField] private LayerMask groundLayers = ~0;
@@ -22,11 +21,11 @@ public class EnemyDash : MonoBehaviour {
     private readonly RaycastHit2D[] groundHits = new RaycastHit2D[4];
     private ParticleSystem dashParticles;
     private MonoBehaviour enemyMovement;
-    private float lastGroundedTime, jumpStartedTime, lastDashTime = -10f;
+    private float lastGroundedTime, lastDashTime = -10f;
     private float dashQueuedTime;
     private float lastDirectionInputTime = -1f;
     private int lastDirection = 1;
-    private bool hasJumped, airDashUsed, movementWasEnabled;
+    private bool airDashUsed, movementWasEnabled;
     private bool dashQueued, queuedUpDash, isDashing, isUpDashing;
     private float activeDashSpeed;
     private int dashDirection;
@@ -50,7 +49,7 @@ public class EnemyDash : MonoBehaviour {
         bodyCollider = GetComponent<Collider2D>();
         CreateDashParticles();
         foreach (MonoBehaviour script in GetComponents<MonoBehaviour>())
-            if (script != this && script.GetType().Name == "EnemyMovment") { enemyMovement = script; break; }
+            if (script != this && script.GetType().Name == "PlayerMovement") { enemyMovement = script; break; }
         lastDirection = transform.right.x < 0f ? -1 : 1;
         lastGroundedTime = Time.time;
     }
@@ -74,9 +73,9 @@ public class EnemyDash : MonoBehaviour {
         dashQueued = false;
         queuedUpDash = false;
         if (Time.time - lastDashTime < dashCooldown) return;
-        if (useUpDash && (IsGrounded || !airDashUsed)) StartDash(false, true);
-        else if (!useUpDash && IsGrounded) StartDash(false);
-        else if (!useUpDash && hasJumped && !airDashUsed && Time.time - jumpStartedTime >= jumpDashDelay) StartDash(true);
+        bool grounded = IsGrounded;
+        if (useUpDash && (grounded || !airDashUsed)) StartDash(false, true);
+        else if (!useUpDash) StartDash(!grounded);
     }
 
     private void FixedUpdate() {
@@ -88,8 +87,7 @@ public class EnemyDash : MonoBehaviour {
         }
         if (Time.time - lastDirectionInputTime > 0.25f && Mathf.Abs(body.linearVelocity.x) > 0.05f)
             lastDirection = body.linearVelocity.x > 0f ? 1 : -1;
-        if (IsGrounded && body.linearVelocity.y <= 0.05f) { hasJumped = false; airDashUsed = false; }
-        else if (!hasJumped && body.linearVelocity.y > 0.05f) { hasJumped = true; jumpStartedTime = Time.time; }
+        if (IsGrounded && body.linearVelocity.y <= 0.05f) airDashUsed = false;
     }
 
     private void OnCollisionEnter2D(Collision2D hit) => CheckGround(hit);
