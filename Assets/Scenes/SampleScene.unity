@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 169371692}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: -0.314, y: -0.668, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -815,8 +815,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.2136576, y: -0.4431968}
-  m_Size: {x: 0.80988306, y: 0.4961756}
+  m_Offset: {x: -0.21297733, y: -0.43571207}
+  m_Size: {x: 0.80308026, y: 0.48120683}
   m_Direction: 1
 --- !u!61 &785845788
 BoxCollider2D:
@@ -929,7 +929,6 @@ MonoBehaviour:
   jumpDashForce: 12
   jumpDashUpForce: 1
   upDashForce: 6
-  jumpDashDelay: 0
   dashDuration: 0.18
   dashCooldown: 0
   groundLayers:
