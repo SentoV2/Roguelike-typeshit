@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class DamageManager : MonoBehaviour {
     [Header("Attack")]
-    [Min(1)][SerializeField] private int damageAmount = 10;
+    [Min(1)][SerializeField] public int damageAmount = 10;
     [SerializeField] private float attackRange = 0.6f;
     [SerializeField] private float attackCooldown = 1.5f;
     [SerializeField] private float enemyReach = 0.4f;
@@ -13,9 +13,15 @@ public class DamageManager : MonoBehaviour {
     [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private string playerTag = "Player";
 
+    private Animator animator;
+
     private float lastAttackTime = -10f;
     private float lastEnemyAttackTime = -10f;
     private bool IsEnemy => gameObject.tag == enemyTag || transform.root.gameObject.tag == enemyTag;
+
+    private void Start() {
+        animator = GetComponent<Animator>();
+    }
 
     private void Update() {
         if (AdminCommands.ConsoleOpen || AdminCommands.AdminFlying) return;

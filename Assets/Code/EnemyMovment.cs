@@ -31,7 +31,10 @@ public class EnemyMovment : MonoBehaviour {
     [SerializeField]
     float distencingPlayer = 1.2f;
 
+
+
     Rigidbody2D rigidbody;
+    DamageManager damageManager;
 
     Vector3 playerPos;
 
@@ -39,6 +42,7 @@ public class EnemyMovment : MonoBehaviour {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         rigidbody = GetComponent<Rigidbody2D>();
+        damageManager = GetComponent<DamageManager>();
         startPostion = transform.position;
         StartCoroutine(uppdatePlayerPos());
     }
@@ -60,21 +64,18 @@ public class EnemyMovment : MonoBehaviour {
         }
         else if (enemyState == State.ATTACKING) {
 
-
-            if (looksRight && transform.position.x < playerPos.x) {
-                if (Vector3.Distance(transform.position, playerPos) > distencingPlayer) {
+            if (Vector3.Distance(transform.position, playerPos) > distencingPlayer) {
+                if (looksRight && transform.position.x < playerPos.x) {
                     rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;
+                    
+                }
+                else if (!looksRight && transform.position.x > playerPos.x) {
+                   rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
+                }
+                else {
+                    flip();
                 }
             }
-            else if (!looksRight && transform.position.x > playerPos.x) {
-                if (Vector3.Distance(transform.position, playerPos) > distencingPlayer) {
-                    rigidbody.linearVelocityX = -speed * Time.fixedDeltaTime;
-                }
-            }
-            else {
-                flip();
-            }
-
         }
     }
 

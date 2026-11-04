@@ -257,7 +257,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -637,10 +637,10 @@ MonoBehaviour:
   damageAmount: 10
   attackRange: 1
   attackCooldown: 1.5
-  enemyReach: 0.4
+  enemyReach: 1.2
   targetLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1
   enemyTag: Enemy
   playerTag: Player
 --- !u!1 &785845781
@@ -956,8 +956,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0daf864a74bf047bb09aed03ea8082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 10
-  attackRange: 0.6
+  damageAmount: 1045
+  attackRange: 1.5
   attackCooldown: 1.5
   enemyReach: 0.4
   targetLayers:
@@ -977,12 +977,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2302a20349f0484cb7a68cddd64c8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallJumpDelay: 0.5
   wallJumpForceX: 8
-  wallJumpForceY: 9
+  wallJumpForceY: 12
   wallLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
+  playerTag: Player
+  phaseTime: 0.3
 --- !u!1 &1804019207
 GameObject:
   m_ObjectHideFlags: 0
