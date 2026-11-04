@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -6,7 +7,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
 public class WalljumpMech : MonoBehaviour {
     [Header("Wall Jump")]
-    [SerializeField] private float wallJumpForceX = 12f;
+    [SerializeField] private float wallJumpForceX = 18f;
     [SerializeField] private float wallJumpForceY = 6f;
     [SerializeField] private LayerMask wallLayers = ~0;
     [SerializeField] private string playerTag = "Player";
@@ -15,23 +16,23 @@ public class WalljumpMech : MonoBehaviour {
     private Collider2D wallCollider;
     private Collider2D ignoredWall;
     private SpriteRenderer playerSprite;
+    private Collider2D playerCollider;
     private RigidbodyConstraints2D originalConstraints;
     private float originalGravity;
     private int jumpDirection;
-    private bool isPlayer;
-    private bool attachedToWall;
-    private bool jumpQueued;
+    private bool originalFlipX, savedFacing, attachedToWall, jumpQueued;
 
     private void Awake() {
         body = GetComponent<Rigidbody2D>();
         originalGravity = body.gravityScale;
         originalConstraints = body.constraints;
         playerSprite = GetComponentInChildren<SpriteRenderer>();
+        playerCollider = GetComponent<Collider2D>();
 
         HealthManager health = GetComponent<HealthManager>();
         if (health == null) health = GetComponentInParent<HealthManager>();
-        isPlayer = gameObject.tag == playerTag || transform.root.gameObject.tag == playerTag ||
-                   (health != null && health.CharacterName == "Main");
+        bool isPlayer = gameObject.tag == playerTag || transform.root.gameObject.tag == playerTag ||
+                        (health != null && health.CharacterName == "Main");
         if (!isPlayer) enabled = false;
     }
 
@@ -41,15 +42,16 @@ public class WalljumpMech : MonoBehaviour {
 
     private void FixedUpdate() {
         if (!attachedToWall) return;
-
         body.linearVelocity = Vector2.zero;
         if (!jumpQueued) return;
 
         body.constraints = originalConstraints;
         body.gravityScale = originalGravity;
         body.linearVelocity = new Vector2(jumpDirection * wallJumpForceX, wallJumpForceY);
-        // FaceDirection(jumpDirection);
+        RestoreFacing();
         ignoredWall = wallCollider;
+        if (ignoredWall != null) Physics2D.IgnoreCollision(playerCollider, ignoredWall, true);
+        if (ignoredWall != null) StartCoroutine(RestoreWallCollision(ignoredWall));
         attachedToWall = false;
         wallCollider = null;
         jumpQueued = false;
@@ -66,36 +68,52 @@ public class WalljumpMech : MonoBehaviour {
         jumpQueued = false;
         body.constraints = originalConstraints;
         body.gravityScale = originalGravity;
+        RestoreFacing();
     }
 
     private void CheckWall(Collision2D collision) {
-        if (collision.collider == ignoredWall ||
-            (wallLayers.value & (1 << collision.gameObject.layer)) == 0) return;
-        if (collision.gameObject.tag.Equals("Enemy")) {
-            return;
-        }
+        Collider2D wall = collision.collider;
+        if (wall == ignoredWall || (wallLayers.value & (1 << collision.gameObject.layer)) == 0) return;
 
         foreach (ContactPoint2D contact in collision.contacts) {
-            if (Mathf.Abs(contact.normal.x) < 0.5f || Mathf.Abs(contact.normal.y) > 0.75f) continue;
-            jumpDirection = contact.normal.x > 0f ? 1 : -1;
+            if (Mathf.Abs(contact.normal.x) < 0.95f || Mathf.Abs(contact.normal.y) > 0.2f) continue;
+            jumpDirection = bodyColliderCenterX() < wall.bounds.center.x ? -1 : 1;
+            if (!attachedToWall) SaveFacing();
             attachedToWall = true;
-            wallCollider = collision.collider;
+            wallCollider = wall;
             body.constraints = originalConstraints | RigidbodyConstraints2D.FreezePositionX |
                                RigidbodyConstraints2D.FreezePositionY;
             body.gravityScale = 0f;
             body.linearVelocity = Vector2.zero;
-            // FaceDirection(jumpDirection);
+            FaceDirection(jumpDirection);
             return;
         }
     }
 
     private void FaceDirection(int direction) {
         if (playerSprite != null) playerSprite.flipX = direction < 0;
-        else {
-            Vector3 scale = transform.localScale;
-            scale.x = Mathf.Abs(scale.x) * direction;
-            transform.localScale = scale;
-        }
+    }
+
+    private void SaveFacing() {
+        if (savedFacing) return;
+        if (playerSprite != null) originalFlipX = playerSprite.flipX;
+        savedFacing = true;
+    }
+
+    private void RestoreFacing() {
+        if (!savedFacing) return;
+        if (playerSprite != null) playerSprite.flipX = originalFlipX;
+        savedFacing = false;
+    }
+
+    private float bodyColliderCenterX() {
+        return playerCollider.bounds.center.x;
+    }
+
+    private IEnumerator RestoreWallCollision(Collider2D wall) {
+        yield return new WaitForSeconds(0.1f);
+        if (playerCollider != null && wall != null) Physics2D.IgnoreCollision(playerCollider, wall, false);
+        if (ignoredWall == wall) ignoredWall = null;
     }
 
     private bool JumpPressed() {
@@ -113,6 +131,10 @@ public class WalljumpMech : MonoBehaviour {
         if (body == null) return;
         body.constraints = originalConstraints;
         body.gravityScale = originalGravity;
+        if (ignoredWall != null && playerCollider != null)
+            Physics2D.IgnoreCollision(playerCollider, ignoredWall, false);
+        ignoredWall = null;
         attachedToWall = false;
+        RestoreFacing();
     }
 }
