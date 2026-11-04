@@ -113,10 +113,10 @@ public class PlayerDash : MonoBehaviour {
     private bool UpDashKeyPressed() {
         bool pressed = false;
 #if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null) pressed = Keyboard.current.rightShiftKey.wasPressedThisFrame;
+        if (Keyboard.current != null) pressed = Keyboard.current.qKey.wasPressedThisFrame;
 #endif
 #if ENABLE_LEGACY_INPUT_MANAGER
-        pressed |= Input.GetKeyDown(KeyCode.RightShift);
+        pressed |= Input.GetKeyDown(KeyCode.Q);
 #endif
         return pressed;
     }
