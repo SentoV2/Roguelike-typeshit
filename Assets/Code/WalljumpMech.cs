@@ -48,7 +48,7 @@ public class WalljumpMech : MonoBehaviour {
         body.constraints = originalConstraints;
         body.gravityScale = originalGravity;
         body.linearVelocity = new Vector2(jumpDirection * wallJumpForceX, wallJumpForceY);
-        FaceDirection(jumpDirection);
+        // FaceDirection(jumpDirection);
         ignoredWall = wallCollider;
         attachedToWall = false;
         wallCollider = null;
@@ -71,6 +71,9 @@ public class WalljumpMech : MonoBehaviour {
     private void CheckWall(Collision2D collision) {
         if (collision.collider == ignoredWall ||
             (wallLayers.value & (1 << collision.gameObject.layer)) == 0) return;
+        if (collision.gameObject.tag.Equals("Enemy")) {
+            return;
+        }
 
         foreach (ContactPoint2D contact in collision.contacts) {
             if (Mathf.Abs(contact.normal.x) < 0.5f || Mathf.Abs(contact.normal.y) > 0.75f) continue;
@@ -81,7 +84,7 @@ public class WalljumpMech : MonoBehaviour {
                                RigidbodyConstraints2D.FreezePositionY;
             body.gravityScale = 0f;
             body.linearVelocity = Vector2.zero;
-            FaceDirection(jumpDirection);
+            // FaceDirection(jumpDirection);
             return;
         }
     }
