@@ -8,7 +8,8 @@ public static class KeyBindManager {
         new KeyBind(KeyCode.D, "right"),
         new KeyBind(KeyCode.Space, "jump"),
         new KeyBind(KeyCode.LeftShift, "dash"),
-        new KeyBind(KeyCode.Q, "updash")
+        new KeyBind(KeyCode.Q, "updash"),
+        new KeyBind(KeyCode.Mouse0, "attack")
     };
 
     public static List<KeyBind> GetKeyBinds() {
