@@ -41,16 +41,9 @@ public class VFXSoundPlayer : MonoBehaviour
         if (!playOnKeyPress || keyToPress == KeyCode.None) return;
 
         bool pressed = false;
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null)
-        {
-            var key = Keyboard.current.FindKeyOnCurrentKeyboardLayout(keyToPress.ToString());
-            pressed = key != null && key.wasPressedThisFrame;
-        }
-#endif
-#if ENABLE_LEGACY_INPUT_MANAGER
-        pressed |= Input.GetKeyDown(keyToPress);
-#endif
+
+        pressed |= Input.GetKeyDown(KeyBindManager.getKeyCode("dash")) || Input.GetKeyDown(KeyBindManager.getKeyCode("updash"));
+
         if (pressed) PlayEffect();
     }
 
