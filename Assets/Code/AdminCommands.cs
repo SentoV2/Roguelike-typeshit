@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 #endif
 
-public class AdminCommands : MonoBehaviour {
+public class AdminCommands : MonoBehaviour
+{
     // Ändra lösenordet här i koden.
     private const string AdminPassword = "koolkool12";
     private const float KillRange = 100f;
@@ -36,7 +37,8 @@ public class AdminCommands : MonoBehaviour {
     private GUIStyle statusStyle;
     private GUIStyle buttonStyle;
 
-    private void Awake() {
+    private void Awake()
+    {
         health = GetComponent<HealthManager>();
         body = GetComponent<Rigidbody>();
         body2D = GetComponent<Rigidbody2D>();
@@ -45,8 +47,10 @@ public class AdminCommands : MonoBehaviour {
         if (body2D != null) originalGravityScale = body2D.gravityScale;
 
         // Hitta rörelseskriptet utan att låsa andra projekt till dess klassfil.
-        foreach (MonoBehaviour script in GetComponents<MonoBehaviour>()) {
-            if (script != this && script.GetType().Name == "EnemyMovment") {
+        foreach (MonoBehaviour script in GetComponents<MonoBehaviour>())
+        {
+            if (script != this && script.GetType().Name == "EnemyMovment")
+            {
                 enemyMovement = script;
                 originalEnemyMovementState = script.enabled;
                 break;
@@ -54,7 +58,8 @@ public class AdminCommands : MonoBehaviour {
         }
     }
 
-    private void Start() {
+    private void Start()
+    {
         // Koppla konsolen till spelarens hälsahändelser.
         if (health == null) return;
         health.HealthChanged += OnHealthChanged;
@@ -62,8 +67,10 @@ public class AdminCommands : MonoBehaviour {
         UpdateHealthStatus(health);
     }
 
-    private void OnDestroy() {
-        if (health != null) {
+    private void OnDestroy()
+    {
+        if (health != null)
+        {
             health.HealthChanged -= OnHealthChanged;
             health.Died -= OnPlayerDied;
         }
@@ -72,17 +79,21 @@ public class AdminCommands : MonoBehaviour {
         WeaponInstantKill = false;
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         if (flying) SetFlying(false);
         if (consoleOpen) SetConsoleOpen(false);
+        WeaponInstantKill = false;
     }
 
-    private void Update() {
+    private void Update()
+    {
         // Öppna med Shift + Enter, med stöd för båda Input System-versionerna.
         bool shift = false;
         bool enter = false;
 #if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null) {
+        if (Keyboard.current != null)
+        {
             shift = Keyboard.current.leftShiftKey.isPressed || Keyboard.current.rightShiftKey.isPressed;
             enter = Keyboard.current.enterKey.wasPressedThisFrame || Keyboard.current.numpadEnterKey.wasPressedThisFrame;
         }
@@ -97,7 +108,8 @@ public class AdminCommands : MonoBehaviour {
             MoveWhileFlying();
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         if (!flying || consoleOpen || body2D == null) return;
 
         Vector2 move = new Vector2(ReadHorizontal(), ReadVertical());
@@ -105,7 +117,8 @@ public class AdminCommands : MonoBehaviour {
         body2D.linearVelocity = move * flySpeed;
     }
 
-    private float ReadHorizontal() {
+    private float ReadHorizontal()
+    {
         float value = 0f;
 #if ENABLE_INPUT_SYSTEM
         if (Keyboard.current != null)
@@ -118,7 +131,8 @@ public class AdminCommands : MonoBehaviour {
         return value;
     }
 
-    private float ReadVertical() {
+    private float ReadVertical()
+    {
         float value = 0f;
 #if ENABLE_INPUT_SYSTEM
         if (Keyboard.current != null)
@@ -133,12 +147,14 @@ public class AdminCommands : MonoBehaviour {
         return value;
     }
 
-    private void MoveWhileFlying() {
+    private void MoveWhileFlying()
+    {
         float horizontal = ReadHorizontal();
         float vertical = ReadVertical();
         Vector3 move;
 
-        if (characterController != null || body != null) {
+        if (characterController != null || body != null)
+        {
             Vector3 forward = Camera.main != null ? Camera.main.transform.forward : transform.forward;
             Vector3 right = Camera.main != null ? Camera.main.transform.right : transform.right;
             forward.y = 0f;
@@ -148,7 +164,8 @@ public class AdminCommands : MonoBehaviour {
             float up = ReadFlyUpDown();
             move = right * horizontal + forward * vertical + Vector3.up * up;
         }
-        else {
+        else
+        {
             move = new Vector3(horizontal, vertical, 0f);
         }
 
@@ -160,7 +177,8 @@ public class AdminCommands : MonoBehaviour {
         else transform.position += move;
     }
 
-    private float ReadFlyUpDown() {
+    private float ReadFlyUpDown()
+    {
         float value = 0f;
 #if ENABLE_INPUT_SYSTEM
         if (Keyboard.current != null)
@@ -174,27 +192,33 @@ public class AdminCommands : MonoBehaviour {
         return value;
     }
 
-    private void OnHealthChanged(HealthManager changedHealth) {
+    private void OnHealthChanged(HealthManager changedHealth)
+    {
         UpdateHealthStatus(changedHealth);
     }
 
-    private void OnPlayerDied(HealthManager deadHealth) {
+    private void OnPlayerDied(HealthManager deadHealth)
+    {
         if (deadHealth == health) message = "Your character died.";
     }
 
-    private void UpdateHealthStatus(HealthManager changedHealth) {
+    private void UpdateHealthStatus(HealthManager changedHealth)
+    {
         healthStatus = "Health  " + changedHealth.CurrentHealth + " / " + changedHealth.MaxHealth;
     }
 
-    private void OnGUI() {
+    private void OnGUI()
+    {
         Event keyEvent = Event.current;
         if (!consoleOpen && keyEvent.type == EventType.KeyDown && keyEvent.shift &&
-            (keyEvent.keyCode == KeyCode.Return || keyEvent.keyCode == KeyCode.KeypadEnter)) {
+            (keyEvent.keyCode == KeyCode.Return || keyEvent.keyCode == KeyCode.KeypadEnter))
+        {
             SetConsoleOpen(true);
             keyEvent.Use();
         }
 
-        if (consoleOpen && keyEvent.type == EventType.KeyDown && keyEvent.keyCode == KeyCode.Escape) {
+        if (consoleOpen && keyEvent.type == EventType.KeyDown && keyEvent.keyCode == KeyCode.Escape)
+        {
             SetConsoleOpen(false);
             keyEvent.Use();
         }
@@ -213,13 +237,15 @@ public class AdminCommands : MonoBehaviour {
         GUILayout.Label("ADMIN CONSOLE", titleStyle);
         GUILayout.Label(unlocked ? "ACCESS GRANTED" : "PASSWORD REQUIRED", statusStyle);
 
-        if (!unlocked) {
+        if (!unlocked)
+        {
             GUILayout.Space(8f);
             passwordInput = GUILayout.PasswordField(passwordInput, '*');
             GUILayout.Space(6f);
             if (GUILayout.Button("Unlock", buttonStyle) || IsEnterPressed(keyEvent)) Unlock();
         }
-        else {
+        else
+        {
             GUILayout.Space(6f);
             GUILayout.BeginHorizontal();
             GUI.SetNextControlName("AdminCommandInput");
@@ -227,7 +253,8 @@ public class AdminCommands : MonoBehaviour {
             bool run = GUILayout.Button("Run", buttonStyle, GUILayout.Width(68f));
             GUILayout.EndHorizontal();
 
-            if (run || IsEnterPressed(keyEvent)) {
+            if (run || IsEnterPressed(keyEvent))
+            {
                 RunCommand(commandInput);
                 commandInput = "";
                 GUI.FocusControl("AdminCommandInput");
@@ -243,12 +270,14 @@ public class AdminCommands : MonoBehaviour {
         GUILayout.EndArea();
     }
 
-    private bool IsEnterPressed(Event keyEvent) {
+    private bool IsEnterPressed(Event keyEvent)
+    {
         return keyEvent.type == EventType.KeyDown &&
                (keyEvent.keyCode == KeyCode.Return || keyEvent.keyCode == KeyCode.KeypadEnter);
     }
 
-    private void CreateStyles() {
+    private void CreateStyles()
+    {
         if (titleStyle != null) return;
         titleStyle = new GUIStyle(GUI.skin.label) { fontSize = 16, fontStyle = FontStyle.Bold, normal = { textColor = Color.white } };
         labelStyle = new GUIStyle(GUI.skin.label) { fontSize = 12, normal = { textColor = new Color(0.78f, 0.82f, 0.88f) } };
@@ -256,49 +285,59 @@ public class AdminCommands : MonoBehaviour {
         buttonStyle = new GUIStyle(GUI.skin.button) { fontSize = 12, fontStyle = FontStyle.Bold, fixedHeight = 28f };
     }
 
-    private void Unlock() {
+    private void Unlock()
+    {
         // Kontrollera lösenordet och rensa rutan efteråt.
         unlocked = passwordInput == AdminPassword;
         passwordInput = "";
         message = unlocked ? "Access granted. Type a command." : "Wrong password.";
     }
 
-    private void SetConsoleOpen(bool open) {
+    private void SetConsoleOpen(bool open)
+    {
         // Stäng konsolen och kräv lösenord nästa gång.
         consoleOpen = open;
         ConsoleOpen = open;
-        if (!open) {
+        if (!open)
+        {
             unlocked = false;
             passwordInput = "";
         }
     }
 
-    private void SetFlying(bool value) {
+    private void SetFlying(bool value)
+    {
         if (flying == value) return;
         flying = value;
         AdminFlying = flying;
-        if (body != null) {
+        if (body != null)
+        {
             body.useGravity = flying ? false : originalUseGravity;
             if (flying) body.linearVelocity = Vector3.zero;
         }
-        if (body2D != null) {
+        if (body2D != null)
+        {
             body2D.gravityScale = flying ? 0f : originalGravityScale;
             if (flying) body2D.linearVelocity = Vector2.zero;
         }
-        if (enemyMovement != null) {
-            if (flying) {
+        if (enemyMovement != null)
+        {
+            if (flying)
+            {
                 enemyMovement.enabled = false;
             }
             else enemyMovement.enabled = originalEnemyMovementState;
         }
     }
 
-    private void RunCommand(string text) {
+    private void RunCommand(string text)
+    {
         // Dela upp kommandot så att till exempel speed kan få ett värde.
         string[] parts = text.Trim().ToLowerInvariant().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         if (parts.Length == 0) return;
 
-        switch (parts[0]) {
+        switch (parts[0])
+        {
             case "help": message = "fly, god, kill, heal, weaponkill, speed, banana, rickroll, troll"; break;
             case "fly":
                 SetFlying(Toggle(parts, flying));
@@ -324,7 +363,8 @@ public class AdminCommands : MonoBehaviour {
                 break;
             case "speed":
                 float newSpeed;
-                if (parts.Length > 1 && float.TryParse(parts[1], out newSpeed) && newSpeed > 0f) {
+                if (parts.Length > 1 && float.TryParse(parts[1], out newSpeed) && newSpeed > 0f)
+                {
                     flySpeed = newSpeed;
                     message = "Fly speed set to " + flySpeed;
                 }
@@ -337,28 +377,34 @@ public class AdminCommands : MonoBehaviour {
         }
     }
 
-    private bool Toggle(string[] parts, bool current) {
+    private bool Toggle(string[] parts, bool current)
+    {
         // Godta on, off eller toggle på kommandon som växlar läge.
         if (parts.Length < 2 || parts[1] == "toggle") return !current;
         return parts[1] == "on" || parts[1] == "true";
     }
 
-    private void KillTargetInFront() {
+    private void KillTargetInFront()
+    {
         // Leta efter ett mål mitt i kamerabilden.
         Camera view = Camera.main;
         if (view == null) { message = "No camera found."; return; }
 
         Ray ray = view.ScreenPointToRay(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f));
-        if (body2D != null) {
+        if (body2D != null)
+        {
             RaycastHit2D hit2D = Physics2D.GetRayIntersection(ray, KillRange);
-            if (hit2D.collider != null) {
+            if (hit2D.collider != null)
+            {
                 Kill(hit2D.collider.GetComponentInParent<HealthManager>());
                 return;
             }
         }
-        else {
+        else
+        {
             RaycastHit hit3D;
-            if (Physics.Raycast(ray, out hit3D, KillRange)) {
+            if (Physics.Raycast(ray, out hit3D, KillRange))
+            {
                 Kill(hit3D.collider.GetComponentInParent<HealthManager>());
                 return;
             }
@@ -366,7 +412,8 @@ public class AdminCommands : MonoBehaviour {
         message = "No target in view.";
     }
 
-    private void Kill(HealthManager target) {
+    private void Kill(HealthManager target)
+    {
         // Döda målet direkt via dess HealthManager.
         if (target == null) { message = "No HealthManager found."; return; }
         target.Kill();
