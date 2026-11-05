@@ -1439,7 +1439,7 @@ GameObject:
   - component: {fileID: 1332687651}
   - component: {fileID: 1332687650}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SettingButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1717,6 +1717,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startButton: {fileID: 981918211}
+  settingButton: {fileID: 1332687650}
+  settingMeny: {fileID: 1758107240}
   gameScenName: 1st level
 --- !u!114 &1510744432
 MonoBehaviour:
@@ -2076,6 +2078,7 @@ MonoBehaviour:
   scrollviewObject: {fileID: 1118412530}
   keybindButtonPrefab: {fileID: 233833498290070486, guid: 86a70b6eba4a1164fb338639cc4a02c3, type: 3}
   backButton: {fileID: 993922210}
+  pauseMeny: {fileID: 1510744430}
 --- !u!114 &1758107242
 MonoBehaviour:
   m_ObjectHideFlags: 0

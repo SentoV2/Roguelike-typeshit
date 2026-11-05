@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsMeny : MonoBehaviour {
@@ -10,6 +11,9 @@ public class SettingsMeny : MonoBehaviour {
 
     [SerializeField]
     Button backButton;
+
+    [SerializeField]
+    GameObject pauseMeny; 
 
 
 
@@ -31,7 +35,7 @@ public class SettingsMeny : MonoBehaviour {
 
     void back() {
         gameObject.SetActive(false);
-        GameManager.getPauseMeny().SetActive(true);
+        pauseMeny.SetActive(true);
     }
 
 }

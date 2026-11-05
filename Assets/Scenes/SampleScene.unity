@@ -317,6 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMeny: {fileID: 0}
+  settingsMeny: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,6 +658,10 @@ MonoBehaviour:
     m_Bits: 1
   enemyTag: Enemy
   playerTag: Player
+  enemyCharacterName: Enemy
+  animator: {fileID: 0}
+  attackState: Attack
+  hitState: Hit
 --- !u!1 &785845781
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,9 +701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98999a9b649b0849b85c1191dd9a60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  right: 100
-  left: 97
-  jump: 32
   speed: 100
   jumpforce: 150
   grundCheck: {fileID: 169371693}
@@ -971,7 +973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 1045
-  attackRange: 1.5
+  attackRange: 2
   attackCooldown: 1.5
   enemyReach: 0.4
   targetLayers:
@@ -979,6 +981,10 @@ MonoBehaviour:
     m_Bits: 4294967295
   enemyTag: Enemy
   playerTag: Player
+  enemyCharacterName: Enemy
+  animator: {fileID: 785845789}
+  attackState: attack
+  hitState: Hit
 --- !u!114 &785845794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -993,6 +999,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallJumpForceX: 8
   wallJumpForceY: 12
+  wallSlideSpeed: 2
+  minimumWallHeight: 2
   wallLayers:
     serializedVersion: 2
     m_Bits: 8

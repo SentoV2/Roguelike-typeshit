@@ -10,11 +10,9 @@ public class GameManager : MonoBehaviour {
     private static bool gamePaused;
 
     private static GameObject staticSettingMeny;
-    private static GameObject staticPauseMeny;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
-        staticPauseMeny = pauseMeny;
         staticSettingMeny = settingsMeny;
     }
 
@@ -45,9 +43,6 @@ public class GameManager : MonoBehaviour {
         return gamePaused;
     }
     
-    public static GameObject getPauseMeny() {
-        return staticPauseMeny;
-    }
     public static GameObject getSettingMeny() {
         return staticSettingMeny;
     }

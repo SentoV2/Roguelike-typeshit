@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 #endif
 
-public class DamageManager : MonoBehaviour
-{
+public class DamageManager : MonoBehaviour {
     [Header("Attack")]
     [Min(1)][SerializeField] private int damageAmount = 10;
     [SerializeField] private float attackRange = 0.6f;
@@ -15,10 +14,10 @@ public class DamageManager : MonoBehaviour
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private string enemyCharacterName = "Enemy";
 
-    [Header("Sprite Animation")]
-    [SerializeField] private Animator attackerAnimator;
-    [SerializeField] private string attackTrigger = "Attack";
-    [SerializeField] private string hitTrigger = "Hit";
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+    [SerializeField] private string attackState = "Attack";
+    [SerializeField] private string hitState = "Hit";
 
     private float lastAttackTime = -10f;
     private float lastEnemyAttackTime = -10f;
@@ -26,23 +25,20 @@ public class DamageManager : MonoBehaviour
     private bool IsEnemy => HasTagInHierarchy(transform.root, enemyTag) ||
                             (ownHealth != null && ownHealth.CharacterName == enemyCharacterName);
 
-    private void Awake()
-    {
+    private void Awake() {
         ownHealth = GetComponent<HealthManager>();
         if (ownHealth == null) ownHealth = GetComponentInParent<HealthManager>();
         if (ownHealth == null) ownHealth = GetComponentInChildren<HealthManager>(true);
-        if (attackerAnimator == null) attackerAnimator = GetComponentInChildren<Animator>(true);
+        if (animator == null) animator = GetComponentInChildren<Animator>(true);
+        if (animator == null) animator = GetComponentInParent<Animator>();
     }
 
-    private void Update()
-    {
-        if (IsEnemy)
-        {
+    private void Update() {
+        if (IsEnemy) {
             if (Time.time - lastEnemyAttackTime < attackCooldown) return;
             HealthManager player = FindTarget(enemyReach, IsPlayer);
-            if (player != null)
-            {
-                if (ApplyDamageWithAnimations(player, false)) lastEnemyAttackTime = Time.time;
+            if (player != null) {
+                if (ApplyDamageTo(player, false)) lastEnemyAttackTime = Time.time;
             }
             return;
         }
@@ -50,58 +46,48 @@ public class DamageManager : MonoBehaviour
         if (!LeftClickPressed() || Time.time - lastAttackTime < attackCooldown) return;
         HealthManager enemy = FindTarget(attackRange, IsEnemyTarget);
         if (enemy == null) return;
-        if (ApplyDamageWithAnimations(enemy, AdminCommands.WeaponInstantKill)) lastAttackTime = Time.time;
+        if (ApplyDamageTo(enemy, AdminCommands.WeaponInstantKill)) lastAttackTime = Time.time;
     }
 
-    public void DealDamage(GameObject target)
-    {
+    public void DealDamage(GameObject target) {
         if (target == null) return;
         HealthManager health = target.GetComponent<HealthManager>();
         if (health == null) health = target.GetComponentInParent<HealthManager>();
         if (health == null) health = target.GetComponentInChildren<HealthManager>();
         if (health != null && health.transform.root != transform.root && IsEnemyTarget(health))
-            ApplyDamageWithAnimations(health, AdminCommands.WeaponInstantKill);
+            ApplyDamageTo(health, AdminCommands.WeaponInstantKill);
     }
 
-    private bool ApplyDamageWithAnimations(HealthManager target, bool instantKill)
-    {
+    private bool ApplyDamageTo(HealthManager target, bool instantKill) {
         if (target == null || !target.IsAlive) return false;
+        PlayAnimation(animator, attackState);
         int healthBefore = target.CurrentHealth;
-        SetTrigger(attackerAnimator, attackTrigger);
         target.ApplyDamage(damageAmount, instantKill);
-        if (instantKill || target.CurrentHealth < healthBefore)
-        {
-            Animator targetAnimator = target.GetComponentInChildren<Animator>(true);
-            SetTrigger(targetAnimator, hitTrigger);
+        if (instantKill || target.CurrentHealth < healthBefore) {
+            Animator targetAnimator = target.transform.root.GetComponentInChildren<Animator>(true);
+            PlayAnimation(targetAnimator, hitState);
         }
         return true;
     }
 
-    private void SetTrigger(Animator animator, string triggerName)
-    {
-        if (animator == null || string.IsNullOrWhiteSpace(triggerName)) return;
-        foreach (AnimatorControllerParameter parameter in animator.parameters)
-        {
-            if (parameter.name == triggerName && parameter.type == AnimatorControllerParameterType.Trigger)
-            {
-                animator.SetTrigger(triggerName);
-                return;
-            }
-        }
+    private void PlayAnimation(Animator targetAnimator, string stateName) {
+        if (targetAnimator == null || targetAnimator.runtimeAnimatorController == null ||
+            string.IsNullOrWhiteSpace(stateName)) return;
+
+        string fullStateName = stateName.Contains(".") ? stateName : "Base Layer." + stateName;
+        int stateHash = Animator.StringToHash(fullStateName);
+        if (targetAnimator.HasState(0, stateHash)) targetAnimator.Play(stateHash, 0, 0f);
     }
 
-    private HealthManager FindTarget(float range, System.Predicate<HealthManager> isValid)
-    {
+    private HealthManager FindTarget(float range, System.Predicate<HealthManager> isValid) {
         Collider2D[] nearby = Physics2D.OverlapCircleAll(transform.position, range, targetLayers);
         HealthManager closest = null;
         float closestDistance = range;
-        foreach (Collider2D hit in nearby)
-        {
+        foreach (Collider2D hit in nearby) {
             HealthManager health = hit.GetComponentInParent<HealthManager>();
             if (health == null || !health.IsAlive || health.transform.root == transform.root || !isValid(health)) continue;
             float distance = Vector2.Distance(transform.position, health.transform.position);
-            if (distance <= closestDistance)
-            {
+            if (distance <= closestDistance) {
                 closest = health;
                 closestDistance = distance;
             }
@@ -109,26 +95,22 @@ public class DamageManager : MonoBehaviour
         return closest;
     }
 
-    private bool IsEnemyTarget(HealthManager health)
-    {
+    private bool IsEnemyTarget(HealthManager health) {
         return health.CharacterName == enemyCharacterName || HasTagInHierarchy(health.transform.root, enemyTag);
     }
 
-    private bool IsPlayer(HealthManager health)
-    {
+    private bool IsPlayer(HealthManager health) {
         return health.CharacterName == "Main" || HasTagInHierarchy(health.transform.root, playerTag);
     }
 
-    private bool HasTagInHierarchy(Transform root, string tagName)
-    {
+    private bool HasTagInHierarchy(Transform root, string tagName) {
         if (string.IsNullOrEmpty(tagName)) return false;
         foreach (Transform item in root.GetComponentsInChildren<Transform>(true))
             if (item.tag == tagName) return true;
         return false;
     }
 
-    private bool LeftClickPressed()
-    {
+    private bool LeftClickPressed() {
         bool pressed = false;
 #if ENABLE_INPUT_SYSTEM
         if (Mouse.current != null) pressed = Mouse.current.leftButton.wasPressedThisFrame;
@@ -139,8 +121,7 @@ public class DamageManager : MonoBehaviour
         return pressed;
     }
 
-    private void OnValidate()
-    {
+    private void OnValidate() {
         damageAmount = Mathf.Max(1, damageAmount);
         attackRange = Mathf.Max(0.01f, attackRange);
         attackCooldown = Mathf.Max(0f, attackCooldown);

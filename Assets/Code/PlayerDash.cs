@@ -1,8 +1,6 @@
 using System.Collections;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
-#endif
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerDash : MonoBehaviour {
@@ -100,37 +98,23 @@ public class PlayerDash : MonoBehaviour {
 
     private bool DashKeyPressed() {
         bool pressed = false;
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null)
-            pressed = Keyboard.current.leftShiftKey.wasPressedThisFrame;
-#endif
-#if ENABLE_LEGACY_INPUT_MANAGER
-        pressed |= Input.GetKeyDown(KeyCode.LeftShift);
-#endif
+        pressed |= Input.GetKeyDown(KeyBindManager.getKeyCode("dash"));
         return pressed;
     }
 
     private bool UpDashKeyPressed() {
         bool pressed = false;
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null) pressed = Keyboard.current.qKey.wasPressedThisFrame;
-#endif
-#if ENABLE_LEGACY_INPUT_MANAGER
-        pressed |= Input.GetKeyDown(KeyCode.Q);
-#endif
+
+        pressed |= Input.GetKeyDown(KeyBindManager.getKeyCode("updash"));
+
         return pressed;
     }
 
     private float ReadHorizontalInput() {
         float direction = 0f;
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null)
-            direction = (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed ? 1f : 0f)
-                      - (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed ? 1f : 0f);
-#endif
-#if ENABLE_LEGACY_INPUT_MANAGER
-        if (direction == 0f) direction = Input.GetAxisRaw("Horizontal");
-#endif
+        if (direction == 0f) direction = (Input.GetKeyDown(KeyBindManager.getKeyCode("right")) ? 1f : 0f)
+                      - (Input.GetKeyDown(KeyBindManager.getKeyCode("left")) ? 1f : 0f);
+
         return direction;
     }
 

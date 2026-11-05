@@ -182,7 +182,7 @@ public class WalljumpMech : MonoBehaviour
         if (Keyboard.current != null) pressed = Keyboard.current.spaceKey.wasPressedThisFrame;
 #endif
 #if ENABLE_LEGACY_INPUT_MANAGER
-        pressed |= Input.GetKeyDown(KeyCode.Space);
+        pressed |= Input.GetKeyDown(KeyBindManager.getKeyCode("jump"));
 #endif
         return pressed;
     }

@@ -2,16 +2,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    // Keys
-    [Header("Controlls")]
-    [SerializeField]
-    KeyCode right = KeyCode.D;
-    [SerializeField]
-    KeyCode left = KeyCode.A;
-    [SerializeField]
-    KeyCode jump = KeyCode.Space;
-
-
     // movment veribales
     [Header("Movement")]
     [SerializeField]
@@ -48,13 +38,13 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate() {
         // gets the left/right movment
-        if (Input.GetKey(right)) {
+        if (Input.GetKey(KeyBindManager.getKeyCode("right"))) {
             move(speed);
             if (!looksRight) {
                 flip();
             }
         }
-        else if (Input.GetKey(left)) {
+        else if (Input.GetKey(KeyBindManager.getKeyCode("left"))) {
             move(-speed);
             if (looksRight) {
                 flip();
@@ -70,7 +60,7 @@ public class PlayerMovement : MonoBehaviour {
         animator.SetBool("Jump", !OnGrund);
 
         // jumps the player if the player is on grund
-        if (Input.GetKey(jump) && OnGrund) {
+        if (Input.GetKey(KeyBindManager.getKeyCode("jump")) && OnGrund) {
             rigidbody2D.AddForceY(jumpforce);
         }
 
