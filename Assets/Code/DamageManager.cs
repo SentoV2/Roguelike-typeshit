@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class DamageManager : MonoBehaviour {
     [Header("Attack")]
-    [Min(1)][SerializeField] public int damageAmount = 10;
+    [Min(1)][SerializeField] private int damageAmount = 10;
     [SerializeField] private float attackRange = 0.6f;
     [SerializeField] private float attackCooldown = 1.5f;
     [SerializeField] private float enemyReach = 0.4f;
@@ -13,14 +13,17 @@ public class DamageManager : MonoBehaviour {
     [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private string playerTag = "Player";
 
-    private Animator animator;
+    [Header("Sprite Animation")]
+    [SerializeField] private Animator attackerAnimator;
+    [SerializeField] private string attackTrigger = "Attack";
+    [SerializeField] private string hitTrigger = "Hit";
 
     private float lastAttackTime = -10f;
     private float lastEnemyAttackTime = -10f;
     private bool IsEnemy => gameObject.tag == enemyTag || transform.root.gameObject.tag == enemyTag;
 
-    private void Start() {
-        animator = GetComponent<Animator>();
+    private void Awake() {
+        if (attackerAnimator == null) attackerAnimator = GetComponentInChildren<Animator>(true);
     }
 
     private void Update() {
@@ -29,8 +32,7 @@ public class DamageManager : MonoBehaviour {
             if (Time.time - lastEnemyAttackTime < attackCooldown) return;
             HealthManager player = FindTarget(enemyReach, IsPlayer);
             if (player != null) {
-                player.ApplyDamage(damageAmount, AdminCommands.WeaponInstantKill);
-                lastEnemyAttackTime = Time.time;
+                if (ApplyDamageWithAnimations(player, false)) lastEnemyAttackTime = Time.time;
             }
             return;
         }
@@ -38,8 +40,7 @@ public class DamageManager : MonoBehaviour {
         if (!LeftClickPressed() || Time.time - lastAttackTime < attackCooldown) return;
         HealthManager enemy = FindTarget(attackRange, IsEnemyTarget);
         if (enemy == null) return;
-        enemy.ApplyDamage(damageAmount, AdminCommands.WeaponInstantKill);
-        lastAttackTime = Time.time;
+        if (ApplyDamageWithAnimations(enemy, AdminCommands.WeaponInstantKill)) lastAttackTime = Time.time;
     }
 
     public void DealDamage(GameObject target) {
@@ -47,7 +48,29 @@ public class DamageManager : MonoBehaviour {
         HealthManager health = target.GetComponent<HealthManager>();
         if (health == null) health = target.GetComponentInParent<HealthManager>();
         if (health != null && health.transform.root != transform.root && IsEnemyTarget(health))
-            health.ApplyDamage(damageAmount, AdminCommands.WeaponInstantKill);
+            ApplyDamageWithAnimations(health, AdminCommands.WeaponInstantKill);
+    }
+
+    private bool ApplyDamageWithAnimations(HealthManager target, bool instantKill) {
+        if (target == null || !target.IsAlive) return false;
+        int healthBefore = target.CurrentHealth;
+        SetTrigger(attackerAnimator, attackTrigger);
+        target.ApplyDamage(damageAmount, instantKill);
+        if (instantKill || target.CurrentHealth < healthBefore) {
+            Animator targetAnimator = target.GetComponentInChildren<Animator>(true);
+            SetTrigger(targetAnimator, hitTrigger);
+        }
+        return true;
+    }
+
+    private void SetTrigger(Animator animator, string triggerName) {
+        if (animator == null || string.IsNullOrWhiteSpace(triggerName)) return;
+        foreach (AnimatorControllerParameter parameter in animator.parameters) {
+            if (parameter.name == triggerName && parameter.type == AnimatorControllerParameterType.Trigger) {
+                animator.SetTrigger(triggerName);
+                return;
+            }
+        }
     }
 
     private HealthManager FindTarget(float range, System.Predicate<HealthManager> isValid) {
