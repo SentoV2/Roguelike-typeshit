@@ -423,6 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMeny: {fileID: 1392093186}
+  settingsMeny: {fileID: 0}
 --- !u!1 &193880657
 GameObject:
   m_ObjectHideFlags: 0
@@ -572595,6 +572596,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallJumpForceX: 6
   wallJumpForceY: 12
+  wallSlideSpeed: 2
+  minimumWallHeight: 2
   wallLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -573218,7 +573221,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0.010678649, y: 0.018343806, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0

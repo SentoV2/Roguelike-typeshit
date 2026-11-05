@@ -4,11 +4,18 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     GameObject pauseMeny;
 
+    [SerializeField]
+    GameObject settingsMeny;
+
     private static bool gamePaused;
+
+    private static GameObject staticSettingMeny;
+    private static GameObject staticPauseMeny;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
-        
+        staticPauseMeny = pauseMeny;
+        staticSettingMeny = settingsMeny;
     }
 
     private void Update() {
@@ -35,5 +42,11 @@ public class GameManager : MonoBehaviour {
         return gamePaused;
     }
     
+    public static GameObject getPauseMeny() {
+        return staticPauseMeny;
+    }
+    public static GameObject getSettingMeny() {
+        return staticSettingMeny;
+    }
 
 }
