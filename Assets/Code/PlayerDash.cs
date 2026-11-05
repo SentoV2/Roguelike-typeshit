@@ -1,9 +1,12 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerDash : MonoBehaviour {
+    [Header("Dash Unlock")]
+    [SerializeField] private bool hasUnlockedDash = false;
+    [SerializeField] private string dashUnlockTag = "DashUnlock";
+
     [Header("Dash")]
     [SerializeField] private float groundDashForce = 7f;
     [SerializeField] private float jumpDashForce = 12f;
@@ -59,13 +62,13 @@ public class PlayerDash : MonoBehaviour {
             lastDirection = inputDirection > 0f ? 1 : -1;
             lastDirectionInputTime = Time.time;
         }
+        if (!hasUnlockedDash) return;
         bool upDashPressed = UpDashKeyPressed();
         if (DashKeyPressed() || upDashPressed) {
             dashQueued = true;
             queuedUpDash = upDashPressed;
             dashQueuedTime = Time.unscaledTime;
         }
-        // Vänta kort så Shift + Enter hinner öppna admin-konsolen.
         if (!dashQueued || Time.unscaledTime - dashQueuedTime < 0.15f) return;
         bool useUpDash = queuedUpDash;
         dashQueued = false;
@@ -88,7 +91,21 @@ public class PlayerDash : MonoBehaviour {
         if (IsGrounded && body.linearVelocity.y <= 0.05f) airDashUsed = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D hit) => CheckGround(hit);
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag(dashUnlockTag)) {
+            hasUnlockedDash = true;
+            Destroy(other.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D hit) {
+        if (hit.gameObject.CompareTag(dashUnlockTag)) {
+            hasUnlockedDash = true;
+            Destroy(hit.gameObject);
+        }
+        CheckGround(hit);
+    }
+
     private void OnCollisionStay2D(Collision2D hit) => CheckGround(hit);
 
     private void CheckGround(Collision2D hit) {
@@ -129,7 +146,7 @@ public class PlayerDash : MonoBehaviour {
             jumpDash ? jumpDashUpForce : body.linearVelocity.y);
         EmitDashParticles(upDash);
 
-        // Pausa EnemyMovment under dashen så att kraften fungerar.
+        // EnemyMovment blir pausad under dashen så att kraften fungerar!! sixten är gay btw
         movementWasEnabled = enemyMovement != null && enemyMovement.enabled;
         if (movementWasEnabled) enemyMovement.enabled = false;
         dashRoutine = StartCoroutine(EndDash());
