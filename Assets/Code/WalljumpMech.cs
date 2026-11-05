@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class WalljumpMech : MonoBehaviour
@@ -178,12 +175,8 @@ public class WalljumpMech : MonoBehaviour
     private bool JumpPressed()
     {
         bool pressed = false;
-#if ENABLE_INPUT_SYSTEM
-        if (Keyboard.current != null) pressed = Keyboard.current.spaceKey.wasPressedThisFrame;
-#endif
-#if ENABLE_LEGACY_INPUT_MANAGER
+
         pressed |= Input.GetKeyDown(KeyBindManager.getKeyCode("jump"));
-#endif
         return pressed;
     }
 
