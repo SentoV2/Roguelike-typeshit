@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 #endif
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class WalljumpMech : MonoBehaviour {
+public class WalljumpMech : MonoBehaviour
+{
     [Header("Wall Jump")]
     [SerializeField] private float wallJumpForceX = 18f;
     [SerializeField] private float wallJumpForceY = 12f;
@@ -29,7 +30,8 @@ public class WalljumpMech : MonoBehaviour {
     private bool phasing;
     private int jumpDirection;
 
-    private void Awake() {
+    private void Awake()
+    {
         body = GetComponent<Rigidbody2D>();
         playerColliders = GetComponentsInChildren<Collider2D>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
@@ -41,13 +43,16 @@ public class WalljumpMech : MonoBehaviour {
         if (!isPlayer) enabled = false;
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (wallSliding && JumpPressed()) jumpQueued = true;
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         if (!wallSliding) return;
-        if (jumpQueued) {
+        if (jumpQueued)
+        {
             Collider2D launchWall = wallCollider;
             body.linearVelocity = new Vector2(jumpDirection * wallJumpForceX, Mathf.Max(12f, wallJumpForceY));
             ignoredWall = launchWall;
@@ -65,20 +70,24 @@ public class WalljumpMech : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision) => CheckWall(collision);
     private void OnCollisionStay2D(Collision2D collision) => CheckWall(collision);
 
-    private void OnCollisionExit2D(Collision2D collision) {
+    private void OnCollisionExit2D(Collision2D collision)
+    {
         if (collision.collider == ignoredWall) ignoredWall = null;
         if (collision.collider != wallCollider) return;
         StopWallSlide();
     }
 
-    private void CheckWall(Collision2D collision) {
+    private void CheckWall(Collision2D collision)
+    {
         if (phasing || collision.collider == ignoredWall ||
             (wallLayers.value & (1 << collision.gameObject.layer)) == 0) return;
 
         Collider2D wall = collision.collider;
-        if (wall.bounds.size.y <= minimumWallHeight) return;
+        if (wall.bounds.size.y <= minimumWallHeight || wall.bounds.size.y <= wall.bounds.size.x ||
+            body.linearVelocity.y > 0f) return;
 
-        for (int i = 0; i < collision.contactCount; i++) {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
             ContactPoint2D contact = collision.GetContact(i);
             if (Mathf.Abs(contact.normal.x) < 0.95f || Mathf.Abs(contact.normal.y) > 0.2f) continue;
 
@@ -96,16 +105,19 @@ public class WalljumpMech : MonoBehaviour {
         }
     }
 
-    private void StopWallSlide() {
+    private void StopWallSlide()
+    {
         wallSliding = false;
         wallCollider = null;
         jumpQueued = false;
         RestoreFacing();
     }
 
-    private IEnumerator PhaseOtherWalls(Collider2D launchWall) {
+    private IEnumerator PhaseOtherWalls(Collider2D launchWall)
+    {
         phasing = true;
-        if (phaseTime <= 0f || playerColliders.Length == 0) {
+        if (phaseTime <= 0f || playerColliders.Length == 0)
+        {
             phasing = false;
             yield break;
         }
@@ -117,7 +129,8 @@ public class WalljumpMech : MonoBehaviour {
         Vector2 size = new Vector2(distance + playerBounds.size.x,
                                    wallJumpForceY * phaseTime + playerBounds.size.y);
 
-        foreach (Collider2D wall in Physics2D.OverlapBoxAll(center, size, 0f, wallLayers)) {
+        foreach (Collider2D wall in Physics2D.OverlapBoxAll(center, size, 0f, wallLayers))
+        {
             if (wall == null || wall.isTrigger || wall == launchWall || wall.attachedRigidbody == body ||
                 wall.bounds.size.y <= wall.bounds.size.x) continue;
             SetWallCollision(wall, true);
@@ -129,35 +142,41 @@ public class WalljumpMech : MonoBehaviour {
         phasing = false;
     }
 
-    private void SetWallCollision(Collider2D wall, bool ignore) {
+    private void SetWallCollision(Collider2D wall, bool ignore)
+    {
         foreach (Collider2D playerCollider in playerColliders)
             if (playerCollider != null && playerCollider.enabled && playerCollider != wall)
                 Physics2D.IgnoreCollision(playerCollider, wall, ignore);
     }
 
-    private void RestorePhasedWalls() {
+    private void RestorePhasedWalls()
+    {
         foreach (Collider2D wall in phasedWalls)
             if (wall != null) SetWallCollision(wall, false);
         phasedWalls.Clear();
     }
 
-    private void FaceAwayFromWall(int direction) {
+    private void FaceAwayFromWall(int direction)
+    {
         if (playerSprite != null) playerSprite.flipX = direction < 0;
     }
 
-    private void SaveFacing() {
+    private void SaveFacing()
+    {
         if (savedFacing) return;
         if (playerSprite != null) originalFlipX = playerSprite.flipX;
         savedFacing = true;
     }
 
-    private void RestoreFacing() {
+    private void RestoreFacing()
+    {
         if (!savedFacing) return;
         if (playerSprite != null) playerSprite.flipX = originalFlipX;
         savedFacing = false;
     }
 
-    private bool JumpPressed() {
+    private bool JumpPressed()
+    {
         bool pressed = false;
 #if ENABLE_INPUT_SYSTEM
         if (Keyboard.current != null) pressed = Keyboard.current.spaceKey.wasPressedThisFrame;
@@ -168,14 +187,16 @@ public class WalljumpMech : MonoBehaviour {
         return pressed;
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         RestorePhasedWalls();
         StopWallSlide();
         ignoredWall = null;
         phasing = false;
     }
 
-    private void OnValidate() {
+    private void OnValidate()
+    {
         wallJumpForceX = Mathf.Max(0f, wallJumpForceX);
         wallJumpForceY = Mathf.Max(12f, wallJumpForceY);
         wallSlideSpeed = Mathf.Max(0f, wallSlideSpeed);
