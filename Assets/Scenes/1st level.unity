@@ -423,6 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMeny: {fileID: 1392093186}
+  settingsMeny: {fileID: 0}
 --- !u!1 &193880657
 GameObject:
   m_ObjectHideFlags: 0
