@@ -12,26 +12,22 @@ public class DamageManager : MonoBehaviour {
     [SerializeField] private LayerMask targetLayers = ~0;
     [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private string playerTag = "Player";
-    [SerializeField] private string enemyCharacterName = "Enemy";
 
     private float lastAttackTime = -10f;
     private float lastEnemyAttackTime = -10f;
-    private HealthManager ownHealth;
-    private bool IsEnemy => HasTagInHierarchy(transform.root, enemyTag) ||
-                            (ownHealth != null && ownHealth.CharacterName == enemyCharacterName);
+    private bool IsEnemy => gameObject.tag == enemyTag || transform.root.gameObject.tag == enemyTag;
 
-    private void Awake() {
-        ownHealth = GetComponent<HealthManager>();
-        if (ownHealth == null) ownHealth = GetComponentInParent<HealthManager>();
-        if (ownHealth == null) ownHealth = GetComponentInChildren<HealthManager>(true);
-    }
-
-    private void Update() {
-        if (IsEnemy) {
+    private void Update()
+    {
+        if (AdminCommands.ConsoleOpen || AdminCommands.AdminFlying) return;
+        if (IsEnemy)
+        {
             if (Time.time - lastEnemyAttackTime < attackCooldown) return;
             HealthManager player = FindTarget(enemyReach, IsPlayer);
-            if (player != null) {
-                if (ApplyDamageTo(player, false)) lastEnemyAttackTime = Time.time;
+            if (player != null)
+            {
+                player.ApplyDamage(damageAmount, AdminCommands.WeaponInstantKill);
+                lastEnemyAttackTime = Time.time;
             }
             return;
         }
@@ -39,25 +35,20 @@ public class DamageManager : MonoBehaviour {
         if (!LeftClickPressed() || Time.time - lastAttackTime < attackCooldown) return;
         HealthManager enemy = FindTarget(attackRange, IsEnemyTarget);
         if (enemy == null) return;
-        if (ApplyDamageTo(enemy, AdminCommands.WeaponInstantKill)) lastAttackTime = Time.time;
+        enemy.ApplyDamage(damageAmount, AdminCommands.WeaponInstantKill);
+        lastAttackTime = Time.time;
     }
 
     public void DealDamage(GameObject target) {
         if (target == null) return;
         HealthManager health = target.GetComponent<HealthManager>();
         if (health == null) health = target.GetComponentInParent<HealthManager>();
-        if (health == null) health = target.GetComponentInChildren<HealthManager>();
         if (health != null && health.transform.root != transform.root && IsEnemyTarget(health))
-            ApplyDamageTo(health, AdminCommands.WeaponInstantKill);
+            health.ApplyDamage(damageAmount, AdminCommands.WeaponInstantKill);
     }
 
-    private bool ApplyDamageTo(HealthManager target, bool instantKill) {
-        if (target == null || !target.IsAlive) return false;
-        target.ApplyDamage(damageAmount, instantKill);
-        return true;
-    }
-
-    private HealthManager FindTarget(float range, System.Predicate<HealthManager> isValid) {
+    private HealthManager FindTarget(float range, System.Predicate<HealthManager> isValid)
+    {
         Collider2D[] nearby = Physics2D.OverlapCircleAll(transform.position, range, targetLayers);
         HealthManager closest = null;
         float closestDistance = range;
@@ -73,19 +64,14 @@ public class DamageManager : MonoBehaviour {
         return closest;
     }
 
-    private bool IsEnemyTarget(HealthManager health) {
-        return health.CharacterName == enemyCharacterName || HasTagInHierarchy(health.transform.root, enemyTag);
+    private bool IsEnemyTarget(HealthManager health)
+    {
+        return health.gameObject.tag == enemyTag || health.transform.root.gameObject.tag == enemyTag;
     }
 
-    private bool IsPlayer(HealthManager health) {
-        return health.CharacterName == "Main" || HasTagInHierarchy(health.transform.root, playerTag);
-    }
-
-    private bool HasTagInHierarchy(Transform root, string tagName) {
-        if (string.IsNullOrEmpty(tagName)) return false;
-        foreach (Transform item in root.GetComponentsInChildren<Transform>(true))
-            if (item.tag == tagName) return true;
-        return false;
+    private bool IsPlayer(HealthManager health)
+    {
+        return health.CharacterName == "Main" || health.gameObject.tag == playerTag || health.transform.root.gameObject.tag == playerTag;
     }
 
     private bool LeftClickPressed() {
