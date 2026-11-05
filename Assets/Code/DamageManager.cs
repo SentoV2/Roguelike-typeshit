@@ -13,36 +13,22 @@ public class DamageManager : MonoBehaviour
     [SerializeField] private LayerMask targetLayers = ~0;
     [SerializeField] private string enemyTag = "Enemy";
     [SerializeField] private string playerTag = "Player";
-    [SerializeField] private string enemyCharacterName = "Enemy";
-
-    [Header("Sprite Animation")]
-    [SerializeField] private Animator attackerAnimator;
-    [SerializeField] private string attackTrigger = "Attack";
-    [SerializeField] private string hitTrigger = "Hit";
 
     private float lastAttackTime = -10f;
     private float lastEnemyAttackTime = -10f;
-    private HealthManager ownHealth;
-    private bool IsEnemy => HasTagInHierarchy(transform.root, enemyTag) ||
-                            (ownHealth != null && ownHealth.CharacterName == enemyCharacterName);
-
-    private void Awake()
-    {
-        ownHealth = GetComponent<HealthManager>();
-        if (ownHealth == null) ownHealth = GetComponentInParent<HealthManager>();
-        if (ownHealth == null) ownHealth = GetComponentInChildren<HealthManager>(true);
-        if (attackerAnimator == null) attackerAnimator = GetComponentInChildren<Animator>(true);
-    }
+    private bool IsEnemy => gameObject.tag == enemyTag || transform.root.gameObject.tag == enemyTag;
 
     private void Update()
     {
+        if (AdminCommands.ConsoleOpen || AdminCommands.AdminFlying) return;
         if (IsEnemy)
         {
             if (Time.time - lastEnemyAttackTime < attackCooldown) return;
             HealthManager player = FindTarget(enemyReach, IsPlayer);
             if (player != null)
             {
-                if (ApplyDamageWithAnimations(player, false)) lastEnemyAttackTime = Time.time;
+                player.ApplyDamage(damageAmount, AdminCommands.WeaponInstantKill);
+                lastEnemyAttackTime = Time.time;
             }
             return;
         }
@@ -50,7 +36,8 @@ public class DamageManager : MonoBehaviour
         if (!LeftClickPressed() || Time.time - lastAttackTime < attackCooldown) return;
         HealthManager enemy = FindTarget(attackRange, IsEnemyTarget);
         if (enemy == null) return;
-        if (ApplyDamageWithAnimations(enemy, AdminCommands.WeaponInstantKill)) lastAttackTime = Time.time;
+        enemy.ApplyDamage(damageAmount, AdminCommands.WeaponInstantKill);
+        lastAttackTime = Time.time;
     }
 
     public void DealDamage(GameObject target)
@@ -58,36 +45,8 @@ public class DamageManager : MonoBehaviour
         if (target == null) return;
         HealthManager health = target.GetComponent<HealthManager>();
         if (health == null) health = target.GetComponentInParent<HealthManager>();
-        if (health == null) health = target.GetComponentInChildren<HealthManager>();
         if (health != null && health.transform.root != transform.root && IsEnemyTarget(health))
-            ApplyDamageWithAnimations(health, AdminCommands.WeaponInstantKill);
-    }
-
-    private bool ApplyDamageWithAnimations(HealthManager target, bool instantKill)
-    {
-        if (target == null || !target.IsAlive) return false;
-        int healthBefore = target.CurrentHealth;
-        SetTrigger(attackerAnimator, attackTrigger);
-        target.ApplyDamage(damageAmount, instantKill);
-        if (instantKill || target.CurrentHealth < healthBefore)
-        {
-            Animator targetAnimator = target.GetComponentInChildren<Animator>(true);
-            SetTrigger(targetAnimator, hitTrigger);
-        }
-        return true;
-    }
-
-    private void SetTrigger(Animator animator, string triggerName)
-    {
-        if (animator == null || string.IsNullOrWhiteSpace(triggerName)) return;
-        foreach (AnimatorControllerParameter parameter in animator.parameters)
-        {
-            if (parameter.name == triggerName && parameter.type == AnimatorControllerParameterType.Trigger)
-            {
-                animator.SetTrigger(triggerName);
-                return;
-            }
-        }
+            health.ApplyDamage(damageAmount, AdminCommands.WeaponInstantKill);
     }
 
     private HealthManager FindTarget(float range, System.Predicate<HealthManager> isValid)
@@ -111,20 +70,12 @@ public class DamageManager : MonoBehaviour
 
     private bool IsEnemyTarget(HealthManager health)
     {
-        return health.CharacterName == enemyCharacterName || HasTagInHierarchy(health.transform.root, enemyTag);
+        return health.gameObject.tag == enemyTag || health.transform.root.gameObject.tag == enemyTag;
     }
 
     private bool IsPlayer(HealthManager health)
     {
-        return health.CharacterName == "Main" || HasTagInHierarchy(health.transform.root, playerTag);
-    }
-
-    private bool HasTagInHierarchy(Transform root, string tagName)
-    {
-        if (string.IsNullOrEmpty(tagName)) return false;
-        foreach (Transform item in root.GetComponentsInChildren<Transform>(true))
-            if (item.tag == tagName) return true;
-        return false;
+        return health.CharacterName == "Main" || health.gameObject.tag == playerTag || health.transform.root.gameObject.tag == playerTag;
     }
 
     private bool LeftClickPressed()
