@@ -1162152,6 +1162152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85493e3eadd9d4d4f95995e6bbd51b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasUnlockedDash: 0
+  dashUnlockTag: DashUnlock
   groundDashForce: 20
   jumpDashForce: 12
   jumpDashUpForce: 2
@@ -1162228,12 +1162230,12 @@ MonoBehaviour:
   enemyReach: 0.4
   targetLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1
   enemyTag: Enemy
   playerTag: Player
   enemyCharacterName: Enemy
-  animator: {fileID: 0}
-  attackState: Attack
+  animator: {fileID: 1267259692}
+  attackState: player_attack
   hitState: Hit
 --- !u!114 &1267259698
 MonoBehaviour:

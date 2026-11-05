@@ -950,6 +950,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85493e3eadd9d4d4f95995e6bbd51b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasUnlockedDash: 0
+  dashUnlockTag: DashUnlock
   groundDashForce: 7
   jumpDashForce: 12
   jumpDashUpForce: 1
@@ -972,18 +974,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0daf864a74bf047bb09aed03ea8082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 1045
+  damageAmount: 10
   attackRange: 2
   attackCooldown: 1.5
   enemyReach: 0.4
   targetLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1
   enemyTag: Enemy
   playerTag: Player
   enemyCharacterName: Enemy
-  animator: {fileID: 785845789}
-  attackState: attack
+  animator: {fileID: 0}
+  attackState: player_attack
   hitState: Hit
 --- !u!114 &785845794
 MonoBehaviour:
