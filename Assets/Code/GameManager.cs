@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (!gamePaused) {
+                if (getSettingMeny().activeSelf == true) {
+                    return;
+                }
                 pauseMeny.SetActive(true);
                 Time.timeScale = 0;
                 gamePaused = true;
