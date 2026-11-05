@@ -14,11 +14,6 @@ public class DamageManager : MonoBehaviour {
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private string enemyCharacterName = "Enemy";
 
-    [Header("Animation")]
-    [SerializeField] private Animator animator;
-    [SerializeField] private string attackState = "Attack";
-    [SerializeField] private string hitState = "Hit";
-
     private float lastAttackTime = -10f;
     private float lastEnemyAttackTime = -10f;
     private HealthManager ownHealth;
@@ -29,8 +24,6 @@ public class DamageManager : MonoBehaviour {
         ownHealth = GetComponent<HealthManager>();
         if (ownHealth == null) ownHealth = GetComponentInParent<HealthManager>();
         if (ownHealth == null) ownHealth = GetComponentInChildren<HealthManager>(true);
-        if (animator == null) animator = GetComponentInChildren<Animator>(true);
-        if (animator == null) animator = GetComponentInParent<Animator>();
     }
 
     private void Update() {
@@ -60,23 +53,8 @@ public class DamageManager : MonoBehaviour {
 
     private bool ApplyDamageTo(HealthManager target, bool instantKill) {
         if (target == null || !target.IsAlive) return false;
-        PlayAnimation(animator, attackState);
-        int healthBefore = target.CurrentHealth;
         target.ApplyDamage(damageAmount, instantKill);
-        if (instantKill || target.CurrentHealth < healthBefore) {
-            Animator targetAnimator = target.transform.root.GetComponentInChildren<Animator>(true);
-            PlayAnimation(targetAnimator, hitState);
-        }
         return true;
-    }
-
-    private void PlayAnimation(Animator targetAnimator, string stateName) {
-        if (targetAnimator == null || targetAnimator.runtimeAnimatorController == null ||
-            string.IsNullOrWhiteSpace(stateName)) return;
-
-        string fullStateName = stateName.Contains(".") ? stateName : "Base Layer." + stateName;
-        int stateHash = Animator.StringToHash(fullStateName);
-        if (targetAnimator.HasState(0, stateHash)) targetAnimator.Play(stateHash, 0, 0f);
     }
 
     private HealthManager FindTarget(float range, System.Predicate<HealthManager> isValid) {
