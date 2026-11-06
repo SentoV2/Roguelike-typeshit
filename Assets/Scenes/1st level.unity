@@ -1161940,7 +1161940,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1575577437149648494, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.53
+      value: -18.37
       objectReference: {fileID: 0}
     - target: {fileID: 1575577437149648494, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1161982,6 +1161982,14 @@ PrefabInstance:
       propertyPath: wallLayers.m_Bits
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3329376131825943229, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3329376131825943229, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: c8d3c4382875efe498b39a4978e54238, type: 3}
     - target: {fileID: 5711217498702598112, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
       propertyPath: groundLayers.m_Bits
       value: 8
@@ -1162444,6 +1162452,51 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -47.75, y: 20.98, z: 0}
   m_LocalScale: {x: 18, y: 9, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1195882058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1195882060}
+  - component: {fileID: 1195882059}
+  m_Layer: 0
+  m_Name: Battle arena spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1195882059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195882058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10abdb225ec091f4eb5c6128a26a09e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spacing: 2
+--- !u!4 &1195882060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195882058}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 137.74, y: -22.09, z: -0.18159655}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1187947,3 +1188000,4 @@ SceneRoots:
   - {fileID: 1359285897}
   - {fileID: 1096441140}
   - {fileID: 1254686129}
+  - {fileID: 1195882060}
