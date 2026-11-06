@@ -1,5 +1,8 @@
 using System.Collections;
+<<<<<<< Updated upstream
 using System.Collections.Generic;
+=======
+>>>>>>> Stashed changes
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,9 +10,13 @@ public class WalljumpMech : MonoBehaviour
 {
     [Header("Wall Jump")]
     [SerializeField] private float wallJumpForceX = 18f;
+<<<<<<< Updated upstream
     [SerializeField] private float wallJumpForceY = 12f;
     [SerializeField] private float wallSlideSpeed = 2f;
     [SerializeField] private float minimumWallHeight = 2f;
+=======
+    [SerializeField] private float wallJumpForceY = 6f;
+>>>>>>> Stashed changes
     [SerializeField] private LayerMask wallLayers = ~0;
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private float phaseTime = 0.3f;
@@ -19,6 +26,7 @@ public class WalljumpMech : MonoBehaviour
     private Collider2D ignoredWall;
     private Collider2D[] playerColliders;
     private SpriteRenderer playerSprite;
+<<<<<<< Updated upstream
     private readonly List<Collider2D> phasedWalls = new List<Collider2D>();
     private bool originalFlipX;
     private bool savedFacing;
@@ -26,12 +34,20 @@ public class WalljumpMech : MonoBehaviour
     private bool jumpQueued;
     private bool phasing;
     private int jumpDirection;
+=======
+    private Collider2D playerCollider;
+    private RigidbodyConstraints2D originalConstraints;
+    private float originalGravity;
+    private int jumpDirection;
+    private bool originalFlipX, savedFacing, attachedToWall, jumpQueued;
+>>>>>>> Stashed changes
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         playerColliders = GetComponentsInChildren<Collider2D>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
+        playerCollider = GetComponent<Collider2D>();
 
         HealthManager health = GetComponent<HealthManager>();
         if (health == null) health = GetComponentInParent<HealthManager>();
@@ -45,6 +61,7 @@ public class WalljumpMech : MonoBehaviour
         if (wallSliding && JumpPressed()) jumpQueued = true;
     }
 
+<<<<<<< Updated upstream
     private void FixedUpdate()
     {
         if (!wallSliding) return;
@@ -62,6 +79,23 @@ public class WalljumpMech : MonoBehaviour
         velocity.x = 0f;
         velocity.y = Mathf.Max(velocity.y, -wallSlideSpeed);
         body.linearVelocity = velocity;
+=======
+    private void FixedUpdate() {
+        if (!attachedToWall) return;
+        body.linearVelocity = Vector2.zero;
+        if (!jumpQueued) return;
+
+        body.constraints = originalConstraints;
+        body.gravityScale = originalGravity;
+        body.linearVelocity = new Vector2(jumpDirection * wallJumpForceX, wallJumpForceY);
+        RestoreFacing();
+        ignoredWall = wallCollider;
+        if (ignoredWall != null) Physics2D.IgnoreCollision(playerCollider, ignoredWall, true);
+        if (ignoredWall != null) StartCoroutine(RestoreWallCollision(ignoredWall));
+        attachedToWall = false;
+        wallCollider = null;
+        jumpQueued = false;
+>>>>>>> Stashed changes
     }
 
     private void OnCollisionEnter2D(Collision2D collision) => CheckWall(collision);
@@ -107,6 +141,7 @@ public class WalljumpMech : MonoBehaviour
         wallSliding = false;
         wallCollider = null;
         jumpQueued = false;
+<<<<<<< Updated upstream
         RestoreFacing();
     }
 
@@ -132,6 +167,29 @@ public class WalljumpMech : MonoBehaviour
                 wall.bounds.size.y <= wall.bounds.size.x) continue;
             SetWallCollision(wall, true);
             phasedWalls.Add(wall);
+=======
+        body.constraints = originalConstraints;
+        body.gravityScale = originalGravity;
+        RestoreFacing();
+    }
+
+    private void CheckWall(Collision2D collision) {
+        Collider2D wall = collision.collider;
+        if (wall == ignoredWall || (wallLayers.value & (1 << collision.gameObject.layer)) == 0) return;
+
+        foreach (ContactPoint2D contact in collision.contacts) {
+            if (Mathf.Abs(contact.normal.x) < 0.95f || Mathf.Abs(contact.normal.y) > 0.2f) continue;
+            jumpDirection = bodyColliderCenterX() < wall.bounds.center.x ? -1 : 1;
+            if (!attachedToWall) SaveFacing();
+            attachedToWall = true;
+            wallCollider = wall;
+            body.constraints = originalConstraints | RigidbodyConstraints2D.FreezePositionX |
+                               RigidbodyConstraints2D.FreezePositionY;
+            body.gravityScale = 0f;
+            body.linearVelocity = Vector2.zero;
+            FaceDirection(jumpDirection);
+            return;
+>>>>>>> Stashed changes
         }
 
         yield return new WaitForSeconds(phaseTime);
@@ -156,6 +214,31 @@ public class WalljumpMech : MonoBehaviour
     private void FaceAwayFromWall(int direction)
     {
         if (playerSprite != null) playerSprite.flipX = direction < 0;
+<<<<<<< Updated upstream
+=======
+    }
+
+    private void SaveFacing() {
+        if (savedFacing) return;
+        if (playerSprite != null) originalFlipX = playerSprite.flipX;
+        savedFacing = true;
+    }
+
+    private void RestoreFacing() {
+        if (!savedFacing) return;
+        if (playerSprite != null) playerSprite.flipX = originalFlipX;
+        savedFacing = false;
+    }
+
+    private float bodyColliderCenterX() {
+        return playerCollider.bounds.center.x;
+    }
+
+    private IEnumerator RestoreWallCollision(Collider2D wall) {
+        yield return new WaitForSeconds(0.1f);
+        if (playerCollider != null && wall != null) Physics2D.IgnoreCollision(playerCollider, wall, false);
+        if (ignoredWall == wall) ignoredWall = null;
+>>>>>>> Stashed changes
     }
 
     private void SaveFacing()
@@ -180,12 +263,24 @@ public class WalljumpMech : MonoBehaviour
         return pressed;
     }
 
+<<<<<<< Updated upstream
     private void OnDisable()
     {
         RestorePhasedWalls();
         StopWallSlide();
         ignoredWall = null;
         phasing = false;
+=======
+    private void OnDisable() {
+        if (body == null) return;
+        body.constraints = originalConstraints;
+        body.gravityScale = originalGravity;
+        if (ignoredWall != null && playerCollider != null)
+            Physics2D.IgnoreCollision(playerCollider, ignoredWall, false);
+        ignoredWall = null;
+        attachedToWall = false;
+        RestoreFacing();
+>>>>>>> Stashed changes
     }
 
     private void OnValidate()
