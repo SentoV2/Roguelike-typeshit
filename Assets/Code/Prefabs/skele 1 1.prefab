@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 7433992991584337329}
   m_Layer: 0
   m_Name: skele 1 1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkDistens: 1
   speed: 0
-  player: {fileID: 0}
+  player: {fileID: 8442503459035489086, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
   attackRange: 1
   distencingPlayer: 1.2
 --- !u!114 &7359769602587194523
