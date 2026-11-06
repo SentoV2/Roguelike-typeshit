@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2270910662352971234}
   - component: {fileID: -6915795140501198299}
   - component: {fileID: -261557413753474940}
+  - component: {fileID: 7093919501571670714}
   m_Layer: 0
   m_Name: BIG BOSS 1 1
   m_TagString: Enemy
@@ -129,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkDistens: 20
   speed: 80
-  player: {fileID: 0}
+  player: {fileID: 8442503459035489086, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
   attackRange: 1
   distencingPlayer: 1.2
 --- !u!114 &6105610200596867328
@@ -206,7 +207,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.23938608}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -216,7 +217,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.4, y: 6.4}
+  m_Size: {x: 6.4, y: 5.9212275}
   m_EdgeRadius: 0
 --- !u!50 &-261557413753474940
 Rigidbody2D:
@@ -245,3 +246,40 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!70 &7093919501571670714
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9017201559007262714}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -1.3928057, y: -2.676788}
+  m_Size: {x: 3.614422, y: 1.0464536}
+  m_Direction: 1
