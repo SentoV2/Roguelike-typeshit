@@ -304,7 +304,7 @@ MonoBehaviour:
   dashCooldown: 0.5
   groundLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   groundCheckDistance: 0.08
 --- !u!114 &8579603270406762198
 MonoBehaviour:
@@ -318,6 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c61a7e98933e6047a9a4bc82a8ea708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnMeny: {fileID: 0}
 --- !u!114 &7156229915695488116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,7 +352,7 @@ MonoBehaviour:
   minimumWallHeight: 2
   wallLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   playerTag: Player
   phaseTime: 0.3
 --- !u!114 &4252520309232056728
