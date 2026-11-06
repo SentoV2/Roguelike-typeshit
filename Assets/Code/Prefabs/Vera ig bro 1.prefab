@@ -105,10 +105,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5550abd1f651b547bf26e710b398938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkDistens: 1
-  speed: 0
+  walkDistens: 100
+  speed: 100
   player: {fileID: 0}
-  attackRange: 1
+  attackRange: 10
   distencingPlayer: 1.2
 --- !u!114 &5105090997341492634
 MonoBehaviour:
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0daf864a74bf047bb09aed03ea8082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 10
+  damageAmount: 100
   attackRange: 0.6
   attackCooldown: 1.5
   enemyReach: 0.4
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkDistens: 1
-  speed: 0
+  speed: 80
   player: {fileID: 8442503459035489086, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
   attackRange: 1
   distencingPlayer: 1.2

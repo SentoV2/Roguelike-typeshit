@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: -6915795140501198299}
   - component: {fileID: -261557413753474940}
   - component: {fileID: -2913069177115822063}
-  - component: {fileID: 3479789150244043191}
   m_Layer: 0
   m_Name: BIG BOSS 1 1
   m_TagString: Enemy
@@ -129,8 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5550abd1f651b547bf26e710b398938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkDistens: 1
-  speed: 1
+  walkDistens: 20
+  speed: 80
   player: {fileID: 0}
   attackRange: 1
   distencingPlayer: 1.2
@@ -157,7 +156,7 @@ MonoBehaviour:
   playerTag: Player
   enemyCharacterName: Enemy
   animator: {fileID: 0}
-  attackState: Attack
+  attackState: bossskelle attack
   hitState: Hit
 --- !u!114 &2270910662352971234
 MonoBehaviour:
@@ -172,8 +171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Main
-  startHealth: 100
-  destroyWhenDead: 0
+  startHealth: 250
+  destroyWhenDead: 1
 --- !u!61 &-6915795140501198299
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -259,21 +258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5550abd1f651b547bf26e710b398938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkDistens: 1
-  speed: 0
+  walkDistens: 20
+  speed: 80
   player: {fileID: 8442503459035489086, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
-  attackRange: 1
+  attackRange: 7
   distencingPlayer: 1.2
---- !u!114 &3479789150244043191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9017201559007262714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10abdb225ec091f4eb5c6128a26a09e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spacing: 1
