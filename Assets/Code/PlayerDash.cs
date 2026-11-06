@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
+#if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerDash : MonoBehaviour {
-    [Header("Dash Unlock")]
-    [SerializeField] private bool hasUnlockedDash = false;
-    [SerializeField] private string dashUnlockTag = "DashUnlock";
-
+public class PlayerDash : MonoBehaviour
+{
     [Header("Dash")]
     [SerializeField] private float groundDashForce = 7f;
     [SerializeField] private float jumpDashForce = 12f;
@@ -31,8 +31,10 @@ public class PlayerDash : MonoBehaviour {
     private float activeDashSpeed;
     private int dashDirection;
     private Coroutine dashRoutine;
-    private bool IsGrounded {
-        get {
+    private bool IsGrounded
+    {
+        get
+        {
             if (Time.time - lastGroundedTime < 0.15f) return true;
             if (bodyCollider == null) return false;
             ContactFilter2D filter = new ContactFilter2D();
@@ -45,30 +47,34 @@ public class PlayerDash : MonoBehaviour {
         }
     }
 
-    private void Awake() {
+    private void Awake()
+    {
         body = GetComponent<Rigidbody2D>();
         bodyCollider = GetComponent<Collider2D>();
         CreateDashParticles();
         foreach (MonoBehaviour script in GetComponents<MonoBehaviour>())
-            if (script != this && script.GetType().Name == "PlayerMovement") { enemyMovement = script; break; }
+            if (script != this && script.GetType().Name == "EnemyMovment") { enemyMovement = script; break; }
         lastDirection = transform.right.x < 0f ? -1 : 1;
         lastGroundedTime = Time.time;
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (AdminCommands.ConsoleOpen || AdminCommands.AdminFlying) { dashQueued = false; return; }
         float inputDirection = ReadHorizontalInput();
-        if (Mathf.Abs(inputDirection) > 0.01f) {
+        if (Mathf.Abs(inputDirection) > 0.01f)
+        {
             lastDirection = inputDirection > 0f ? 1 : -1;
             lastDirectionInputTime = Time.time;
         }
-        if (!hasUnlockedDash) return;
         bool upDashPressed = UpDashKeyPressed();
-        if (DashKeyPressed() || upDashPressed) {
+        if (DashKeyPressed() || upDashPressed)
+        {
             dashQueued = true;
             queuedUpDash = upDashPressed;
             dashQueuedTime = Time.unscaledTime;
         }
+        // Vänta kort så Shift + Enter hinner öppna admin-konsolen.
         if (!dashQueued || Time.unscaledTime - dashQueuedTime < 0.15f) return;
         bool useUpDash = queuedUpDash;
         dashQueued = false;
@@ -79,8 +85,15 @@ public class PlayerDash : MonoBehaviour {
         else if (!useUpDash) StartDash(!grounded);
     }
 
-    private void FixedUpdate() {
-        if (isDashing) {
+    private void FixedUpdate()
+    {
+        if (AdminCommands.AdminFlying)
+        {
+            isDashing = false;
+            return;
+        }
+        if (isDashing)
+        {
             body.linearVelocity = isUpDashing
                 ? new Vector2(0f, activeDashSpeed)
                 : new Vector2(dashDirection * activeDashSpeed, body.linearVelocity.y);
@@ -91,51 +104,56 @@ public class PlayerDash : MonoBehaviour {
         if (IsGrounded && body.linearVelocity.y <= 0.05f) airDashUsed = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag(dashUnlockTag)) {
-            hasUnlockedDash = true;
-            Destroy(other.gameObject);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D hit) {
-        if (hit.gameObject.CompareTag(dashUnlockTag)) {
-            hasUnlockedDash = true;
-            Destroy(hit.gameObject);
-        }
-        CheckGround(hit);
-    }
-
+    private void OnCollisionEnter2D(Collision2D hit) => CheckGround(hit);
     private void OnCollisionStay2D(Collision2D hit) => CheckGround(hit);
 
-    private void CheckGround(Collision2D hit) {
+    private void CheckGround(Collision2D hit)
+    {
         foreach (ContactPoint2D point in hit.contacts)
             if (point.normal.y > 0.5f) { lastGroundedTime = Time.time; break; }
     }
 
-    private bool DashKeyPressed() {
+    private bool DashKeyPressed()
+    {
         bool pressed = false;
-        pressed |= Input.GetKeyDown(KeyBindManager.getKeyCode("dash"));
+#if ENABLE_INPUT_SYSTEM
+        if (Keyboard.current != null)
+            pressed = Keyboard.current.leftShiftKey.wasPressedThisFrame;
+#endif
+#if ENABLE_LEGACY_INPUT_MANAGER
+        pressed |= Input.GetKeyDown(KeyCode.LeftShift);
+#endif
         return pressed;
     }
 
-    private bool UpDashKeyPressed() {
+    private bool UpDashKeyPressed()
+    {
         bool pressed = false;
-
-        pressed |= Input.GetKeyDown(KeyBindManager.getKeyCode("updash"));
-
+#if ENABLE_INPUT_SYSTEM
+        if (Keyboard.current != null) pressed = Keyboard.current.qKey.wasPressedThisFrame;
+#endif
+#if ENABLE_LEGACY_INPUT_MANAGER
+        pressed |= Input.GetKeyDown(KeyCode.Q);
+#endif
         return pressed;
     }
 
-    private float ReadHorizontalInput() {
+    private float ReadHorizontalInput()
+    {
         float direction = 0f;
-        if (direction == 0f) direction = (Input.GetKeyDown(KeyBindManager.getKeyCode("right")) ? 1f : 0f)
-                      - (Input.GetKeyDown(KeyBindManager.getKeyCode("left")) ? 1f : 0f);
-
+#if ENABLE_INPUT_SYSTEM
+        if (Keyboard.current != null)
+            direction = (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed ? 1f : 0f)
+                      - (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed ? 1f : 0f);
+#endif
+#if ENABLE_LEGACY_INPUT_MANAGER
+        if (direction == 0f) direction = Input.GetAxisRaw("Horizontal");
+#endif
         return direction;
     }
 
-    private void StartDash(bool jumpDash, bool upDash = false) {
+    private void StartDash(bool jumpDash, bool upDash = false)
+    {
         lastDashTime = Time.time;
         if (jumpDash || (upDash && !IsGrounded)) airDashUsed = true;
         dashDirection = lastDirection;
@@ -146,13 +164,14 @@ public class PlayerDash : MonoBehaviour {
             jumpDash ? jumpDashUpForce : body.linearVelocity.y);
         EmitDashParticles(upDash);
 
-        // EnemyMovment blir pausad under dashen så att kraften fungerar!! sixten är gay btw
+        // Pausa EnemyMovment under dashen så att kraften fungerar.
         movementWasEnabled = enemyMovement != null && enemyMovement.enabled;
         if (movementWasEnabled) enemyMovement.enabled = false;
         dashRoutine = StartCoroutine(EndDash());
     }
 
-    private void CreateDashParticles() {
+    private void CreateDashParticles()
+    {
         GameObject particleObject = new GameObject("Dash Particles");
         particleObject.transform.SetParent(transform, false);
         dashParticles = particleObject.AddComponent<ParticleSystem>();
@@ -165,14 +184,15 @@ public class PlayerDash : MonoBehaviour {
         main.startSize = new ParticleSystem.MinMaxCurve(0.12f, 0.22f);
         main.startSpeed = 0f;
         main.startColor = new ParticleSystem.MinMaxGradient(new Color(0.08f, 0.08f, 0.09f), new Color(0.58f, 0.58f, 0.62f));
-        var emission = dashParticles.emission;
+        ParticleSystem.EmissionModule emission = dashParticles.emission;
         emission.enabled = false;
-        var shape = dashParticles.shape;
+        ParticleSystem.ShapeModule shape = dashParticles.shape;
         shape.enabled = false;
 
         ParticleSystem.ColorOverLifetimeModule fade = dashParticles.colorOverLifetime;
         fade.enabled = true;
-        fade.color = new ParticleSystem.MinMaxGradient(new Gradient {
+        fade.color = new ParticleSystem.MinMaxGradient(new Gradient
+        {
             colorKeys = new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 1f) },
             alphaKeys = new[] { new GradientAlphaKey(0.9f, 0f), new GradientAlphaKey(0f, 1f) }
         });
@@ -188,8 +208,10 @@ public class PlayerDash : MonoBehaviour {
         if (sprite != null) particlesRenderer.sortingLayerID = sprite.sortingLayerID;
     }
 
-    private void EmitDashParticles(bool upDash = false) {
-        for (int i = 0; i < 12; i++) {
+    private void EmitDashParticles(bool upDash = false)
+    {
+        for (int i = 0; i < 12; i++)
+        {
             ParticleSystem.EmitParams particle = new ParticleSystem.EmitParams();
             particle.position = transform.position + (upDash
                 ? new Vector3(Random.Range(-0.2f, 0.2f), -0.35f, 0f)
@@ -204,14 +226,16 @@ public class PlayerDash : MonoBehaviour {
         }
     }
 
-    private IEnumerator EndDash() {
+    private IEnumerator EndDash()
+    {
         yield return new WaitForSeconds(dashDuration);
         isDashing = false;
         if (enemyMovement != null && movementWasEnabled && !AdminCommands.AdminFlying) enemyMovement.enabled = true;
         dashRoutine = null;
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         if (dashRoutine != null) StopCoroutine(dashRoutine);
         isDashing = false;
         if (enemyMovement != null && movementWasEnabled && !AdminCommands.AdminFlying) enemyMovement.enabled = true;
