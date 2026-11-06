@@ -1162230,12 +1162230,12 @@ MonoBehaviour:
   enemyReach: 0.4
   targetLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1
   enemyTag: Enemy
   playerTag: Player
   enemyCharacterName: Enemy
-  animator: {fileID: 0}
-  attackState: Attack
+  animator: {fileID: 1267259692}
+  attackState: player_attack
   hitState: Hit
 --- !u!114 &1267259698
 MonoBehaviour:
