@@ -23,7 +23,7 @@ public class EnemyMovment : MonoBehaviour {
     bool looksRight = true;
 
 
-    [SerializeField]
+
     GameObject player;
     [SerializeField]
     float attackRange = 1;
@@ -38,6 +38,10 @@ public class EnemyMovment : MonoBehaviour {
 
     Vector3 playerPos;
 
+    public void init(GameObject player) {
+        this.player = player;
+    }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -49,6 +53,7 @@ public class EnemyMovment : MonoBehaviour {
 
     void FixedUpdate() {
         if (enemyState == State.IDLE) {
+            print(Vector3.Distance(transform.position, player.transform.position));
             if (looksRight && transform.position.x < startPostion.x + walkDistens) {
                 rigidbody.linearVelocityX = speed * Time.fixedDeltaTime;
             }

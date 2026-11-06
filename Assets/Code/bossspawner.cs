@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class bossspawner : MonoBehaviour
@@ -8,6 +9,9 @@ public class bossspawner : MonoBehaviour
 
     [SerializeField]
     GameObject enemyPrefab;
+
+    [SerializeField]
+    GameObject player;
 
     private static readonly Vector2[] Directions =
     {
@@ -43,6 +47,9 @@ public class bossspawner : MonoBehaviour
             Vector3 position = origin + new Vector3(direction.x * stepX, direction.y * stepY, 0f);
             GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
             enemy.name = gameObject.name + " Enemy";
+
+            EnemyMovment enemyMovment = enemy.GetComponent<EnemyMovment>();
+            enemyMovment.init(player);
 
             bossspawner copiedSpawner = enemy.GetComponent<bossspawner>();
             if (copiedSpawner != null)

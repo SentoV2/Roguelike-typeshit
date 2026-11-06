@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7808018541496592964}
   - component: {fileID: 9003716512506773806}
   - component: {fileID: -2312164634058997194}
+  - component: {fileID: 269511187969613354}
   m_Layer: 0
   m_Name: Goblin 1
   m_TagString: Enemy
@@ -143,9 +144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 10
-  attackRange: 0.6
+  attackRange: 1
   attackCooldown: 1.5
-  enemyReach: 0.4
+  enemyReach: 1
   targetLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -206,7 +207,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0049681067, y: 0.09439027}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -216,7 +217,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.56, y: 0.59}
+  m_Size: {x: 0.9127228, y: 0.7787806}
   m_EdgeRadius: 0
 --- !u!50 &-2312164634058997194
 Rigidbody2D:
@@ -245,3 +246,40 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!70 &269511187969613354
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4212336846399792560}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.005606502, y: -0.337982}
+  m_Size: {x: 0.9275369, y: 0.3073772}
+  m_Direction: 1

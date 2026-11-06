@@ -7,9 +7,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     GameObject settingsMeny;
 
-    [SerializeField]
-    GameManager deathMeny;
-
     private static bool gamePaused;
 
     private static GameObject staticSettingMeny;
