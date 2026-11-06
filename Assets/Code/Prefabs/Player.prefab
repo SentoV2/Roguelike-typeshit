@@ -305,7 +305,7 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 8
-  groundCheckDistance: 0.08
+  groundCheckDistance: 0.06
 --- !u!114 &8579603270406762198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,11 +391,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: c8d3c4382875efe498b39a4978e54238, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
