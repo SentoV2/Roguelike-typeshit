@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkDistens: 1
-  speed: 0
+  speed: 1
   player: {fileID: 8442503459035489086, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
   attackRange: 1
   distencingPlayer: 1.2
