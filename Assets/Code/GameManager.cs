@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     GameObject settingsMeny;
 
+    [SerializeField]
+    GameManager deathMeny;
+
     private static bool gamePaused;
 
     private static GameObject staticSettingMeny;
@@ -34,7 +37,9 @@ public class GameManager : MonoBehaviour {
     }
 
     public void unPause() {
-        pauseMeny.SetActive(false);
+        if (pauseMeny.activeSelf == true) {
+            pauseMeny.SetActive(false);
+        }
         Time.timeScale = 1;
         gamePaused = false;
     }

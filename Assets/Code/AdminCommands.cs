@@ -10,6 +10,9 @@ public class AdminCommands : MonoBehaviour
     private const string AdminPassword = "koolkool12";
     private const float KillRange = 100f;
 
+    [SerializeField]
+    GameObject respawnMeny;
+
     // DamageManager använder detta när vapendöd är på.
     public static bool WeaponInstantKill { get; private set; }
     public static bool ConsoleOpen { get; private set; }
@@ -43,6 +46,7 @@ public class AdminCommands : MonoBehaviour
         body = GetComponent<Rigidbody>();
         body2D = GetComponent<Rigidbody2D>();
         characterController = GetComponent<CharacterController>();
+        if (respawnMeny == null) respawnMeny = FindFirstObjectByType<RespawnMeny>().gameObject;
         if (body != null) originalUseGravity = body.useGravity;
         if (body2D != null) originalGravityScale = body2D.gravityScale;
 
@@ -199,7 +203,10 @@ public class AdminCommands : MonoBehaviour
 
     private void OnPlayerDied(HealthManager deadHealth)
     {
-        if (deadHealth == health) message = "Your character died.";
+        if (deadHealth == health) {
+            message = "Your character died.";
+            respawnMeny.SetActive(true);
+        }
     }
 
     private void UpdateHealthStatus(HealthManager changedHealth)
