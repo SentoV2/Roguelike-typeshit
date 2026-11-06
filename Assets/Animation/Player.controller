@@ -65,7 +65,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -908190668400400337}
     m_Position: {x: 300, y: 110, z: 0}
-<<<<<<< Updated upstream
   - serializedVersion: 1
     m_State: {fileID: 5626947422537503437}
     m_Position: {x: 370, y: 220, z: 0}
@@ -78,8 +77,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 8817353765955165803}
     m_Position: {x: 640, y: 210, z: 0}
-=======
->>>>>>> Stashed changes
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -175,12 +172,8 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
-<<<<<<< Updated upstream
   - {fileID: -7301806920544671440}
   - {fileID: 1792502873641075047}
-=======
-  - {fileID: 5229514076488236299}
->>>>>>> Stashed changes
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -229,7 +222,6 @@ AnimatorController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Player
   serializedVersion: 5
-<<<<<<< Updated upstream
   m_AnimatorParameters:
   - m_Name: Jump
     m_Type: 4
@@ -243,9 +235,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-=======
-  m_AnimatorParameters: []
->>>>>>> Stashed changes
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -259,36 +248,25 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
-<<<<<<< Updated upstream
 --- !u!1101 &730835102011947917
-=======
---- !u!1101 &5229514076488236299
->>>>>>> Stashed changes
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-<<<<<<< Updated upstream
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Jump
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5626947422537503437}
-=======
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: -908190668400400337}
->>>>>>> Stashed changes
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
-<<<<<<< Updated upstream
   m_ExitTime: 0.625
   m_HasExitTime: 1
   m_HasFixedDuration: 1
@@ -315,9 +293,6 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0
-=======
-  m_ExitTime: 0.25
->>>>>>> Stashed changes
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

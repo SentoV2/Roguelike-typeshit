@@ -502987,16 +502987,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 171, y: -19, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 17
-      m_TileSpriteIndex: 17
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
   - first: {x: 203, y: -19, z: 0}
     second:
       serializedVersion: 2
@@ -525158,7 +525148,6 @@ Tilemap:
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: 12, y: -6, z: 0}
-<<<<<<< Updated upstream
     second:
       serializedVersion: 2
       m_TileIndex: 7
@@ -525179,8 +525168,6 @@ Tilemap:
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   - first: {x: 14, y: -6, z: 0}
-=======
->>>>>>> Stashed changes
     second:
       serializedVersion: 2
       m_TileIndex: 15
@@ -525910,7 +525897,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-<<<<<<< Updated upstream
   - first: {x: 157, y: -6, z: 0}
     second:
       serializedVersion: 2
@@ -527431,8 +527417,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-=======
->>>>>>> Stashed changes
   - first: {x: 11, y: -5, z: 0}
     second:
       serializedVersion: 2
@@ -587965,19 +587949,12 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-<<<<<<< Updated upstream
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 621
-=======
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: a0932a2213eef4e449cca681e43abcbc, type: 2}
-  - m_RefCount: 675
->>>>>>> Stashed changes
     m_Data: {fileID: 11400000, guid: 745a5f1e26c2d8e49b39bee730a0ef89, type: 2}
   - m_RefCount: 185
     m_Data: {fileID: 11400000, guid: b4f3aa6a4d579274088c0b1df3b97d15, type: 2}
-<<<<<<< Updated upstream
   - m_RefCount: 75
     m_Data: {fileID: 11400000, guid: abf1649fe332092478287d413f57cc39, type: 2}
   - m_RefCount: 70
@@ -587995,43 +587972,17 @@ Tilemap:
   - m_RefCount: 58
     m_Data: {fileID: 11400000, guid: e39c592d6c1d58d4ba2704081c505aec, type: 2}
   - m_RefCount: 21
-=======
-  - m_RefCount: 74
-    m_Data: {fileID: 11400000, guid: abf1649fe332092478287d413f57cc39, type: 2}
-  - m_RefCount: 73
-    m_Data: {fileID: 11400000, guid: 60c1768352502084883d0058cb235534, type: 2}
-  - m_RefCount: 242
-    m_Data: {fileID: 11400000, guid: b770cdee12325b0438fc2487456888b3, type: 2}
-  - m_RefCount: 102
-    m_Data: {fileID: 11400000, guid: 94e0b6717ebda6a4f9a37310368f7f82, type: 2}
-  - m_RefCount: 222
-    m_Data: {fileID: 11400000, guid: 8a25a355caf92094fbda7641004604ab, type: 2}
-  - m_RefCount: 508
-    m_Data: {fileID: 11400000, guid: cc884e189707bef4da5504ed3546e41e, type: 2}
-  - m_RefCount: 2
-    m_Data: {fileID: 11400000, guid: c7c42b82704557e47a3ab3758587543a, type: 2}
-  - m_RefCount: 59
-    m_Data: {fileID: 11400000, guid: e39c592d6c1d58d4ba2704081c505aec, type: 2}
-  - m_RefCount: 25
->>>>>>> Stashed changes
     m_Data: {fileID: 11400000, guid: 226c93b61c8db834090f4e187c787151, type: 2}
-  - m_RefCount: 46
+  - m_RefCount: 45
     m_Data: {fileID: 11400000, guid: a51bc4214f96da7469c6c5724bf8b932, type: 2}
   - m_RefCount: 71
     m_Data: {fileID: 11400000, guid: 6114112afabc7a04f8526d78d353fd81, type: 2}
-<<<<<<< Updated upstream
   - m_RefCount: 34
     m_Data: {fileID: 11400000, guid: ab7f1b185c65a144d801268039cbb442, type: 2}
   - m_RefCount: 56353
-=======
-  - m_RefCount: 41
-    m_Data: {fileID: 11400000, guid: ab7f1b185c65a144d801268039cbb442, type: 2}
-  - m_RefCount: 6598
->>>>>>> Stashed changes
     m_Data: {fileID: 11400000, guid: 71f4a9f4964b82746b1fa6276b869bfb, type: 2}
   - m_RefCount: 130
     m_Data: {fileID: 11400000, guid: cda69adfeb220f3499da5048d96eafa8, type: 2}
-<<<<<<< Updated upstream
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
@@ -588042,14 +587993,9 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: c9ee4781443399a4fb795d811cfcbaf7, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-=======
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 9472cc6afec99d343a752ad653007e3c, type: 2}
->>>>>>> Stashed changes
   m_TileSpriteArray:
   - m_RefCount: 185
     m_Data: {fileID: 966553565911320568, guid: fe73a0807cfb87c42b2da559807e27ac, type: 3}
-<<<<<<< Updated upstream
   - m_RefCount: 621
     m_Data: {fileID: 95362816552532823, guid: 2756011c6b33b4f44b8dc1a916f1c2b5, type: 3}
   - m_RefCount: 58
@@ -588071,47 +588017,17 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 21
-=======
-  - m_RefCount: 675
-    m_Data: {fileID: 95362816552532823, guid: 2756011c6b33b4f44b8dc1a916f1c2b5, type: 3}
-  - m_RefCount: 59
-    m_Data: {fileID: -8454725536324948631, guid: c7b13db44aef93e44abe1448a948f286, type: 3}
-  - m_RefCount: 74
-    m_Data: {fileID: -5218537947353737746, guid: 2f829229d40e9bc4297941d1753ef85a, type: 3}
-  - m_RefCount: 73
-    m_Data: {fileID: -1629033780478356732, guid: 4be3a21bbd274f641ae93111bf0ea38d, type: 3}
-  - m_RefCount: 242
-    m_Data: {fileID: -1442878603468910834, guid: be98db7331c04c14fb76eb20a3815a56, type: 3}
-  - m_RefCount: 102
-    m_Data: {fileID: 4879031811235194967, guid: c9118b9ad9cc3b845a8f1cf073f0138e, type: 3}
-  - m_RefCount: 222
-    m_Data: {fileID: -8001031087816936756, guid: 84470dd19facbba4880837a893008856, type: 3}
-  - m_RefCount: 508
-    m_Data: {fileID: -8892439167877206452, guid: 037ab8ec3641e734089b74f5c5dc9e68, type: 3}
-  - m_RefCount: 2
-    m_Data: {fileID: -4271766756184342796, guid: efd38f3188d9db2488541bf73fdf668e, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 7482667652216324306, guid: 9e38c1fb59892b34c80080bc035a7065, type: 3}
-  - m_RefCount: 25
->>>>>>> Stashed changes
     m_Data: {fileID: -7942504698539945408, guid: 1b432466807498d48ad9d39db01ba952, type: 3}
-  - m_RefCount: 46
+  - m_RefCount: 45
     m_Data: {fileID: 6903584012435872609, guid: a47d823a7028e874fa60f5c08ac54309, type: 3}
   - m_RefCount: 71
     m_Data: {fileID: 9100628432037306104, guid: 115fad682fa22304ea75dbcdfa67f709, type: 3}
-<<<<<<< Updated upstream
   - m_RefCount: 34
     m_Data: {fileID: -8241698766958270278, guid: db938701e14b6f946aec3c1bf0ab6bfd, type: 3}
   - m_RefCount: 56353
-=======
-  - m_RefCount: 41
-    m_Data: {fileID: -8241698766958270278, guid: db938701e14b6f946aec3c1bf0ab6bfd, type: 3}
-  - m_RefCount: 6598
->>>>>>> Stashed changes
     m_Data: {fileID: 3787204207871543403, guid: b8ede90745fa60d4187c5536f9efeb29, type: 3}
   - m_RefCount: 130
     m_Data: {fileID: -3283432334317096823, guid: 131bff924c3c8384da93fd5e11544a98, type: 3}
-<<<<<<< Updated upstream
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
@@ -588124,12 +588040,6 @@ Tilemap:
     m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 58237
-=======
-  - m_RefCount: 1
-    m_Data: {fileID: -8707133783163546048, guid: 13835d9dc5210e94dae393d8220b26db, type: 3}
-  m_TileMatrixArray:
-  - m_RefCount: 8871
->>>>>>> Stashed changes
     m_Data:
       e00: 1
       e01: 0
@@ -588166,11 +588076,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-<<<<<<< Updated upstream
   - m_RefCount: 58705
-=======
-  - m_RefCount: 8871
->>>>>>> Stashed changes
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   - m_RefCount: 0
     m_Data: {r: 5e-44, g: 5e-44, b: 5e-44, a: 5e-44}
@@ -588236,54 +588142,7 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
-<<<<<<< Updated upstream
 --- !u!1 &492503402
-=======
---- !u!1 &1106362669 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5376610979435013769, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-  m_PrefabInstance: {fileID: 1907804354}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1106362673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1106362669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe0daf864a74bf047bb09aed03ea8082, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageAmount: 10
-  attackRange: 0.6
-  attackCooldown: 1.5
-  enemyReach: 0.4
-  targetLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  enemyTag: Enemy
-  playerTag: Player
---- !u!114 &1106362674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1106362669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5550abd1f651b547bf26e710b398938, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkDistens: 1
-  speed: 1
-  player: {fileID: 1267259684}
-  attackRange: 1
-  distencingPlayer: 1.2
---- !u!1 &1267259684
->>>>>>> Stashed changes
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -588291,26 +588150,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< Updated upstream
   - component: {fileID: 492503404}
   - component: {fileID: 492503403}
-=======
-  - component: {fileID: 1267259691}
-  - component: {fileID: 1267259690}
-  - component: {fileID: 1267259689}
-  - component: {fileID: 1267259688}
-  - component: {fileID: 1267259687}
-  - component: {fileID: 1267259686}
-  - component: {fileID: 1267259692}
-  - component: {fileID: 1267259693}
-  - component: {fileID: 1267259694}
-  - component: {fileID: 1267259695}
-<<<<<<< HEAD
-  - component: {fileID: 1267259697}
-=======
->>>>>>> 5ccb27409ca42ec2eea042331c22dc75cf66729e
-  - component: {fileID: 1267259696}
->>>>>>> Stashed changes
   m_Layer: 0
   m_Name: Background_0 (1)
   m_TagString: Untagged
@@ -588318,143 +588159,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< Updated upstream
 --- !u!212 &492503403
-=======
---- !u!61 &1267259686
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267259684}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.20517826, y: 0.116384655}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.36, y: 1.36}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.5896435, y: 0.7672307}
-  m_EdgeRadius: 0
---- !u!70 &1267259687
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267259684}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: -0.19368052, y: -0.35830888}
-  m_Size: {x: 0.7166197, y: 0.7166197}
-  m_Direction: 1
---- !u!114 &1267259688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267259684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b98999a9b649b0849b85c1191dd9a60a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  right: 100
-  left: 97
-  jump: 32
-  speed: 300
-  jumpforce: 100
-  grundCheck: {fileID: 193880658}
-  grundCheckDistencs: 0.1
-  grundLayer:
-    serializedVersion: 2
-    m_Bits: 8
---- !u!50 &1267259689
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1267259684}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!212 &1267259690
->>>>>>> Stashed changes
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1164489,7 +1164194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
   m_Material: {fileID: 0}
   m_Color: {r: 0.9559748, g: 0.41185072, b: 0.41185072, a: 0.30588236}
   m_RaycastTarget: 1
@@ -1164510,18 +1164214,10 @@ MonoBehaviour:
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1760382278
 CanvasRenderer:
-=======
-  characterName: Main
-  startHealth: 100
-  destroyWhenDead: 0
---- !u!114 &1267259696
-MonoBehaviour:
->>>>>>> Stashed changes
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
   m_GameObject: {fileID: 1760382275}
   m_CullTransparentMesh: 1
 --- !u!1 &1787957369
@@ -1164598,30 +1164294,10 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!4 &1787957371
 Transform:
-=======
-  m_GameObject: {fileID: 1267259684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-<<<<<<< HEAD
-  m_Script: {fileID: 11500000, guid: e93f184f8ae5d8d4ca6336139d66f86b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vfxPrefab: {fileID: 0}
-  sound: {fileID: 8300000, guid: 24f962c42065c67489465c78dd15f52f, type: 3}
-  effectOffset: {x: 0, y: 0, z: 0}
-  effectLifetime: 2
-  soundVolume: 1
-  playOnStart: 0
-  playOnCollision: 0
-  playOnTrigger: 0
---- !u!82 &1267259697
-AudioSource:
->>>>>>> Stashed changes
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< Updated upstream
   m_GameObject: {fileID: 1787957369}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1164631,110 +1164307,6 @@ AudioSource:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
-  m_GameObject: {fileID: 1267259684}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 24f962c42065c67489465c78dd15f52f, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-=======
-  m_Script: {fileID: 11500000, guid: e2302a20349f0484cb7a68cddd64c8ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallJumpForceX: 12
-  wallJumpForceY: 6
-  wallLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  playerTag: Player
->>>>>>> 5ccb27409ca42ec2eea042331c22dc75cf66729e
->>>>>>> Stashed changes
 --- !u!1 &1834162248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185424,69 +1184996,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1001 &1907804354
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 486195874774345435, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 85.41432
-      objectReference: {fileID: 0}
-    - target: {fileID: 486195874774345435, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -25.534916
-      objectReference: {fileID: 0}
-    - target: {fileID: 486195874774345435, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 486195874774345435, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 486195874774345435, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 486195874774345435, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 486195874774345435, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 486195874774345435, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 486195874774345435, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 486195874774345435, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5376610979435013769, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      propertyPath: m_Name
-      value: Goblin
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5376610979435013769, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1106362674}
-    - targetCorrespondingSourceObject: {fileID: 5376610979435013769, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1106362673}
-  m_SourcePrefab: {fileID: 100100000, guid: 6cf7746d25c945349ab6502bd04f166d, type: 3}
 --- !u!1 &1915310166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185746,7 +1185255,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 159212613}
   - {fileID: 1915310168}
-<<<<<<< Updated upstream
   - {fileID: 956955641}
   - {fileID: 1392093191}
   - {fileID: 846787139}
@@ -1185760,7 +1185268,3 @@ SceneRoots:
   - {fileID: 1787957371}
   - {fileID: 1359285897}
   - {fileID: 1096441140}
-=======
-  - {fileID: 1267259691}
-  - {fileID: 1907804354}
->>>>>>> Stashed changes
