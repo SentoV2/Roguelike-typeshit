@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3755519798052106378}
   - component: {fileID: 6427110197421055285}
   - component: {fileID: 6881601167583601495}
-  - component: {fileID: 7145928114627755431}
   - component: {fileID: 3737527557375369717}
   - component: {fileID: 7168200339534752247}
   - component: {fileID: 8134182204743116375}
@@ -116,23 +115,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7145928114627755431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7178173698702637924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5550abd1f651b547bf26e710b398938, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkDistens: 15
-  speed: 80
-  player: {fileID: 8442503459035489086, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
-  attackRange: 5
-  distencingPlayer: 1.2
 --- !u!114 &3737527557375369717
 MonoBehaviour:
   m_ObjectHideFlags: 0
