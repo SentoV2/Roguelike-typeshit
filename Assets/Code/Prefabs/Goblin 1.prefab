@@ -129,13 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Main
-<<<<<<< HEAD
   startHealth: 30
   destroyWhenDead: 1
-=======
-  startHealth: 100
-  destroyWhenDead: 0
->>>>>>> 8e3f07bc9f642af1c3d04f844a45bfb7423af1eb
 --- !u!114 &349432052935863139
 MonoBehaviour:
   m_ObjectHideFlags: 0

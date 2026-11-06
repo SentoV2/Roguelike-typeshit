@@ -6,6 +6,9 @@ public class bossspawner : MonoBehaviour
 {
     [SerializeField, Min(0.01f)] private float spacing = 1f;
 
+    [SerializeField]
+    GameObject enemyPrefab;
+
     private static readonly Vector2[] Directions =
     {
         new Vector2(-1f, -1f), new Vector2(0f, -1f), new Vector2(1f, -1f),
@@ -15,6 +18,10 @@ public class bossspawner : MonoBehaviour
 
     private void Start()
     {
+
+        if (enemyPrefab == null) {
+            return;
+        }
         
         enabled = false;
 
@@ -34,7 +41,7 @@ public class bossspawner : MonoBehaviour
         foreach (Vector2 direction in Directions)
         {
             Vector3 position = origin + new Vector3(direction.x * stepX, direction.y * stepY, 0f);
-            GameObject enemy = Instantiate(gameObject, position, transform.rotation);
+            GameObject enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
             enemy.name = gameObject.name + " Enemy";
 
             bossspawner copiedSpawner = enemy.GetComponent<bossspawner>();
