@@ -1162152,6 +1162152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85493e3eadd9d4d4f95995e6bbd51b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasUnlockedDash: 0
+  dashUnlockTag: DashUnlock
   groundDashForce: 20
   jumpDashForce: 12
   jumpDashUpForce: 2
