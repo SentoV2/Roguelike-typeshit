@@ -25,7 +25,7 @@ public class bossspawner : MonoBehaviour
         
         enabled = false;
 
-        Type enemyMovementType = FindType("EnemyMovement");
+        Type enemyMovementType = FindType("EnemyMovment");
         if (enemyMovementType == null || !typeof(Component).IsAssignableFrom(enemyMovementType))
         {
             Debug.LogError("bossspawner: Could not find a MonoBehaviour named EnemyMovement. Ensure that script compiles and its class is named EnemyMovement.", this);

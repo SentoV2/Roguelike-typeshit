@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5550abd1f651b547bf26e710b398938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkDistens: 1
-  speed: 1
+  walkDistens: 20
+  speed: 80
   player: {fileID: 0}
   attackRange: 1
   distencingPlayer: 1.2
@@ -156,7 +156,7 @@ MonoBehaviour:
   playerTag: Player
   enemyCharacterName: Enemy
   animator: {fileID: 0}
-  attackState: Attack
+  attackState: bossskelle attack
   hitState: Hit
 --- !u!114 &2270910662352971234
 MonoBehaviour:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Main
-  startHealth: 100
+  startHealth: 250
   destroyWhenDead: 1
 --- !u!61 &-6915795140501198299
 BoxCollider2D:
@@ -258,8 +258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5550abd1f651b547bf26e710b398938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkDistens: 1
-  speed: 0
+  walkDistens: 20
+  speed: 80
   player: {fileID: 8442503459035489086, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
-  attackRange: 1
+  attackRange: 7
   distencingPlayer: 1.2

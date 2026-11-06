@@ -139,7 +139,7 @@ MonoBehaviour:
   playerTag: Player
   enemyCharacterName: Enemy
   animator: {fileID: 0}
-  attackState: Attack
+  attackState: skele attak
   hitState: Hit
 --- !u!114 &7311993838999734871
 MonoBehaviour:
@@ -153,10 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5550abd1f651b547bf26e710b398938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkDistens: 1
-  speed: 0
+  walkDistens: 20
+  speed: 80
   player: {fileID: 8442503459035489086, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
-  attackRange: 1
+  attackRange: 5
   distencingPlayer: 1.2
 --- !u!114 &7359769602587194523
 MonoBehaviour:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Main
-  startHealth: 100
+  startHealth: 40
   destroyWhenDead: 1
 --- !u!61 &7126265403703099919
 BoxCollider2D:
@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkDistens: 1
-  speed: 0
+  speed: 60
   player: {fileID: 8442503459035489086, guid: fe7033bd039213f4fa66a9153d036d95, type: 3}
   attackRange: 1
   distencingPlayer: 1.2

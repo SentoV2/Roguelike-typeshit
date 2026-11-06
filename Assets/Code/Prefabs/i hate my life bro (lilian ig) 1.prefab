@@ -131,8 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Main
-  startHealth: 100
-  destroyWhenDead: 0
+  startHealth: 2147483647
+  destroyWhenDead: 1
 --- !u!114 &8110415240328502702
 MonoBehaviour:
   m_ObjectHideFlags: 0
