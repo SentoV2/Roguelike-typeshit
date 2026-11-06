@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Main
   startHealth: 100
-  destroyWhenDead: 0
+  destroyWhenDead: 1
 --- !u!61 &7126265403703099919
 BoxCollider2D:
   m_ObjectHideFlags: 0
