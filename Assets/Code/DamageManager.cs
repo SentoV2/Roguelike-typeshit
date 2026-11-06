@@ -43,7 +43,7 @@ public class DamageManager : MonoBehaviour
             HealthManager player = FindTarget(enemyReach, IsPlayer);
             if (player != null)
             {
-                if (ApplyDamageTo(player, false, true)) lastEnemyAttackTime = Time.time;
+                if (ApplyDamageTo(player, false)) lastEnemyAttackTime = Time.time;
             }
             return;
         }
@@ -51,7 +51,7 @@ public class DamageManager : MonoBehaviour
         if (!LeftClickPressed() || Time.time - lastAttackTime < attackCooldown) return;
         HealthManager enemy = FindTarget(attackRange, IsEnemyTarget);
         if (enemy == null) return;
-        if (ApplyDamageTo(enemy, AdminCommands.WeaponInstantKill, true)) lastAttackTime = Time.time;
+        if (ApplyDamageTo(enemy, AdminCommands.WeaponInstantKill)) lastAttackTime = Time.time;
     }
 
     public void DealDamage(GameObject target)
@@ -61,20 +61,16 @@ public class DamageManager : MonoBehaviour
         if (health == null) health = target.GetComponentInParent<HealthManager>();
         if (health == null) health = target.GetComponentInChildren<HealthManager>();
         if (health != null && health.transform.root != transform.root && IsEnemyTarget(health))
-            ApplyDamageTo(health, AdminCommands.WeaponInstantKill, false);
+            ApplyDamageTo(health, AdminCommands.WeaponInstantKill);
     }
 
-    private bool ApplyDamageTo(HealthManager target, bool instantKill, bool playAttackAnimation)
+    private bool ApplyDamageTo(HealthManager target, bool instantKill)
     {
         if (target == null || !target.IsAlive) return false;
-        if (playAttackAnimation) PlayAnimation(animator, attackState);
+        PlayAnimation(animator, attackState);
         int healthBefore = target.CurrentHealth;
-        bool died = false;
-        System.Action<HealthManager> deathHandler = changed => died = changed == target;
-        target.Died += deathHandler;
         target.ApplyDamage(damageAmount, instantKill);
-        target.Died -= deathHandler;
-        if (instantKill || died || target.CurrentHealth < healthBefore)
+        if (instantKill || target.CurrentHealth < healthBefore)
         {
             Animator targetAnimator = target.transform.root.GetComponentInChildren<Animator>(true);
             PlayAnimation(targetAnimator, hitState);
